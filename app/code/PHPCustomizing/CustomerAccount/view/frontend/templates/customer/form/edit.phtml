@@ -27,17 +27,18 @@
                 $telephoneDefaultValue = $telephoneAttribute->getValue();
             }
         ?>
-
+        <?= $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class)->setObject($block->getCustomer())->toHtml() ?>
         <div class="field">
-            <label class="label" for="telephone">
+            <!-- <label class="label" for="telephone">
                 <span>
-                    <?php echo $this->helper(\Magento\Framework\EscapeHelper::class)->escapeHtmlAttr(__('Telephone')) ?>
+                    <?php //echo $block->escapeHtmlAttr(__('Telephone')) ?>
                 </span>
                 <input type="text" name="telephone" id="telephone" data-role="telephone" value="<?= $telephoneDefaultValue; ?>"
-                title="<?php echo $this->helper(\Magento\Framework\EscapeHelper::class)->escapeHtmlAttr(__('Telephone')) ?>" class="input-text" />
-            </label>
+                title="<?php //echo $block->escapeHtmlAttr(__('Telephone')) ?>" class="input-text" />
+            </label> -->
         </div>
         <!-- The End to change -->
+
         <?php if ($_taxvat->isEnabled()) : ?>
             <?= $_taxvat->setTaxvat($block->getCustomer()->getTaxvat())->toHtml() ?>
         <?php endif ?>

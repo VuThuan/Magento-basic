@@ -13,7 +13,7 @@
             <action method="setTemplate">
                 <argument name="template" xsi:type="string">
                     PHPCustomizing_CustomerAccount::customer/form/edit.phtml
-                </argument>
+                </argument> 
             </action>
         </referenceContainer>
     </body>
