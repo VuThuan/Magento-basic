@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_product_add_after">
+        <observer name="customer_discount_price" instance="ParactivePart3\ObserverExample\Observer\DiscountPrice" />
+    </event>
+    <event name="controller_action_postdispatch">
+        <observer name="example_log_controller_action"
+            instance="ParactivePart3\ObserverExample\Observer\LogControllerAction"/>
+    </event>
+</config>
