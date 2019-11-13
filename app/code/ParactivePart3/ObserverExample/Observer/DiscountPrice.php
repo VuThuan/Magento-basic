@@ -28,21 +28,18 @@ class DiscountPrice implements ObserverInterface
     {
         $quote_item = $observer->getEvent()->getData('quote_item');
         $quote_item = ($quote_item->getParentItem() ? $quote_item->getParentItem() : $quote_item);
-        
+        //final price
+        $finalPrice = $quote_item->getProduct()->getFinalPrice();
+
         //Check if customer login
         if($this->_customerSession->isLoggedIn()){
-            //final price
-            $finalPrice = $quote_item->getProduct()->getFinalPrice();
             //discount the price by 50% 
-            $new_price = $finalPrice - ($finalPrice * 50 / 100);
-            $quote_item->setCustomPrice($new_price);
-            $quote_item->setOriginalCustomPrice($new_price);
+            $finalPrice = $finalPrice - ($finalPrice * 50 / 100);
         }
-        else{
-            $price = $quote_item->getProduct()->getFinalPrice();
-            $quote_item->setCustomPrice($price);
-            $quote_item->setOriginalCustomPrice($price);
-        }
+
+        $quote_item->setCustomPrice($finalPrice);
+        $quote_item->setOriginalCustomPrice($finalPrice);
+        
         $quote_item->getProduct()->setIsSuperMode(true);
 
         return $this;
