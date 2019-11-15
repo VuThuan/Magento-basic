@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="1column">
+    <body>
+        <referenceContainer name="content-1">
+            <block class="ParactivePart3\ProductRepositoryInterfaceTest\Block\Product" 
+                   name="repositoryTest" template="ParactivePart3_RepositoryInterface::repositoryTest.phtml" />
+        </referenceContainer>
+    </body>
+</page>

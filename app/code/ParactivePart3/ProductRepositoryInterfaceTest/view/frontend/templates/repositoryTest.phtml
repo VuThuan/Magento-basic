@@ -1,0 +1,12 @@
+<?php
+
+$id = 2;
+$sku = 'Sunrise Mug';
+
+$productById = $block->getProductById($id);
+$productBySKU = $block->getProductBySku($sku);
+
+echo $productById->getEntity() . '</br>'. $productById->getName();
+
+echo $productBySKU->getEntity() . '</br>'. $productBySKU->getName();
+
