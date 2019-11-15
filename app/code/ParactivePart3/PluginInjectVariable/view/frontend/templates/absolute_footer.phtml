@@ -1,9 +1,6 @@
 <div class="absolute-footer" style="text-align:center;">
     <p>
-        [ParactivePart3_PluginInjectVariable]: <?php echo $block->getNameInLayout() ?>
-    </p>
-    <p>
-        <?php if (!$customer->isEmpty()) echo 'Customer is logged in'; ?>
+        <?php if (!$customer->isEmpty()) echo 'Customer:'. $customer->getName(); ?>
     </p>
     <?php /* @escapeNotVerified */
     echo $block->getMiscellaneousHtml(); ?>
