@@ -4,7 +4,7 @@
     <body>
         <referenceContainer name="content-1">
             <block class="ParactivePart3\ProductRepositoryInterfaceTest\Block\Product" 
-                   name="repositoryTest" template="ParactivePart3_RepositoryInterface::repositoryTest.phtml" />
+                   name="repositoryTest" template="ParactivePart3_RepositoryInterface::repotest.phtml" />
         </referenceContainer>
     </body>
 </page>
