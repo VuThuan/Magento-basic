@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Catalog\Block\Product\View" 
-                type="ParactivePart3\PreferenceClass\Block\Catalog\Product\View" />
+    <preference for="Magento\Catalog\Model\Product" 
+                type="ParactivePart3\PreferenceClass\Model\Catalog\Product" />
 </config>

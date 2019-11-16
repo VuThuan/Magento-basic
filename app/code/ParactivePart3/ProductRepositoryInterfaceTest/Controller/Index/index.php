@@ -1,6 +1,6 @@
 <?php
 
-namespace ParactivePart3\PreferenceClass\Controller\Test;
+namespace ParactivePart3\PreferenceClass\Controller\Index;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
