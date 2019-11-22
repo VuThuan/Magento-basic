@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="PHPTest_BannerSlider::banner_slider" title="Banner Slider" translate="title" 
+             module="PHPTest_BannerSlider" sortOrder="20" resource="PHPTest_BannerSlider::banner_slider"/>
+
+        <add id="PHPTest_BannerSlider::all_banners" title="All Banners" translate="title" 
+             module="PHPTest_BannerSlider" sortOrder="10" resource="PHPTest_BannerSlider::all_banners" 
+             parent="PHPTest_BannerSlider::banner_slider" action="phptest_banner_slider/banner/index" />
+
+        <add id="PHPTest_BannerSlider::all_groups" title="All Groups" translate="title" 
+             module="PHPTest_BannerSlider" sortOrder="10" resource="PHPTest_BannerSlider::all_groups" 
+             parent="PHPTest_BannerSlider::banner_slider" action="phptest_banner_slider/group/index" />
+    </menu>
+</config>
