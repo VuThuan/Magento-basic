@@ -9,7 +9,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="PHPTest_BannerSlider::banner_slider" title="BannerSlider" translate="title" sortOrder="130">
+                <resource id="PHPTest_BannerSlider::banners_slider" title="BannerSlider" translate="title" sortOrder="130">
                     <resource id="PHPTest_BannerSlider::all_banners" title="Banners" translate="title" sortOrder="10">
                         <resource id="PHPTest_BannerSlider::banner_create" title="Create" translate="title" sortOrder="10" />
                         <resource id="PHPTest_BannerSlider::banner_read" title="Read" translate="title" sortOrder="20" />

@@ -27,7 +27,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>PHPTest_BannerSlider::all_banners</aclResource>
-        <dataProvider class="Magento\Cms\Ui\Component\DataProvider" name="phptest_banners_slider_banner_listing_data_source">
+        <dataProvider class="\Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="phptest_banners_slider_banner_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
@@ -178,7 +178,8 @@
                 </item>
             </argument>
         </column>
-        <column name="status">
+        
+        <!-- <column name="status">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">PHPTest\BannerSlider\Model\Banner\Source\Status</item>
                 <item name="config" xsi:type="array">
@@ -215,7 +216,7 @@
                 </item>
             </argument>
         </column>
-        <column name="store_id" class="PHPTest\BannerSlider\Ui\Component\Listing\Column\Store">
+        <column name="store_id" class="Magento\Store\Ui\Component\Listing\Column\Store">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
@@ -244,8 +245,8 @@
                     <item name="visible" xsi:type="boolean">false</item>
                 </item>
             </argument>
-        </column>
-        <actionsColumn name="actions" class="PHPTest\BannerSlider\Ui\Component\Listing\Column\BannerActions">
+        </column> -->
+        <actionsColumn name="actions" class="PHPTest\BannerSlider\UI\Component\Listing\Column\BannerActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="indexField" xsi:type="string">id</item>

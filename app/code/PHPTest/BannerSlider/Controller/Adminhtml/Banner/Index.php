@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPTest\BannerSlider\Controller\Banner;
+namespace PHPTest\BannerSlider\Controller\Adminhtml\Banner;
 
 class Index extends \Magento\Backend\App\Action
 {
@@ -40,8 +40,7 @@ class Index extends \Magento\Backend\App\Action
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('PHPTest_BannerSlider::all_banners')
         ->addBreadcrumb(__('Banners Slider'), __('Banners Slider'))
-        ->addBreadcrumb(__('Banners'), __('Banners'))->getConfig()
-        ->getTitle()->prepend(__('All Banners'));
+        ->getConfig()->getTitle()->prepend(__('All Banners'));
 
         return $resultPage;
     }

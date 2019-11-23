@@ -2,7 +2,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/App/etc/routes.xsd">
     <router id="admin">
-        <route id="phptest_banner_slider" frontName="phptest_banner_slider">
+        <route id="phptest_banners_slider" frontName="phptest_banners_slider">
             <module name="PHPTest_BannerSlider" />
         </route>
     </router>

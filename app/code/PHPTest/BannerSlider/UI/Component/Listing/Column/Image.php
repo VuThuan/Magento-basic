@@ -1,40 +1,38 @@
 <?php
 
-namespace PHPTest\BannerSlider\UI\Component\Listing\Column;
-
-/**
- * Class Image
- *
- * @api
- * @since 100.0.2
- */
+namespace PHPTest\BannerSlider\Ui\Component\Listing\Column;
+use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
 class Image extends \Magento\Ui\Component\Listing\Columns\Column
 {
-    const NAME = 'image';
-
-    const ALT_FIELD = 'name';
-
+    /**
+     * Url path
+     */
+    const URL_PATH_EDIT = 'phptest_banners_slider/banner/edit';
+    /**
+     * @var \PHPTest\BannerSlider\Model\Banner
+     */
+    protected $banner;
     /**
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param \Magento\Catalog\Helper\Image $imageHelper
      * @param \Magento\Framework\UrlInterface $urlBuilder
+     * @param \PHPTest\BannerSlider\Model\Banner $banner
      * @param array $components
      * @param array $data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        \Magento\Catalog\Helper\Image $imageHelper,
         \Magento\Framework\UrlInterface $urlBuilder,
+        \PHPTest\BannerSlider\Model\Banner $banner,
         array $components = [],
         array $data = []
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
-        $this->imageHelper = $imageHelper;
         $this->urlBuilder = $urlBuilder;
+        $this->banner = $banner;
     }
-
     /**
      * Prepare Data Source
      *
@@ -46,32 +44,16 @@ class Image extends \Magento\Ui\Component\Listing\Columns\Column
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
-                $product = new \Magento\Framework\DataObject($item);
-                $imageHelper = $this->imageHelper->init($product, 'product_listing_thumbnail');
-                $item[$fieldName . '_src'] = $imageHelper->getUrl();
-                $item[$fieldName . '_alt'] = $this->getAlt($item) ?: $imageHelper->getLabel();
+                $banner = new \Magento\Framework\DataObject($item);
+                $item[$fieldName . '_src'] = $this->banner->getImageUrl($banner['image']);
+                $item[$fieldName . '_orig_src'] = $this->banner->getImageUrl($banner['image']);
                 $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(
-                    'catalog/product/edit',
-                    ['id' => $product->getEntityId(), 'store' => $this->context->getRequestParam('store')]
+                    self::URL_PATH_EDIT,
+                    ['id' => $banner['id']]
                 );
-                $origImageHelper = $this->imageHelper->init($product, 'product_listing_thumbnail_preview');
-                $item[$fieldName . '_orig_src'] = $origImageHelper->getUrl();
+                $item[$fieldName . '_alt'] = $banner['name'];
             }
         }
-
         return $dataSource;
-    }
-
-    /**
-     * Get Alt
-     *
-     * @param array $row
-     *
-     * @return null|string
-     */
-    protected function getAlt($row)
-    {
-        $altField = $this->getData('config/altField') ?: self::ALT_FIELD;
-        return $row[$altField] ?? null;
     }
 }

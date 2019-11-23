@@ -17,18 +17,6 @@ class Banner extends AbstractModel
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 2;
 
-    /**#@-*/
-
-    /**#@-*/
-    protected $_cacheTag = 'phptest_banners_slider';
-
-    /**
-     * Prefix of model events names
-     *
-     * @var string
-     */
-    protected $_eventPrefix = 'phptest_banners_slider';
-
     /**
      * Construct.
      *
@@ -36,7 +24,7 @@ class Banner extends AbstractModel
      */
     protected function _construct()
     {
-        $this->_init(\PHPTest\BannerSlider\Model\ResourceModel\Banner::class);
+        $this->_init(PHPTest\BannerSlider\Model\ResourceModel\Banner::class);
     }
 
     /**
