@@ -18,33 +18,32 @@
         <?php if ($_dob->isEnabled()) : ?>
             <?= $_dob->setDate($block->getCustomer()->getDob())->toHtml() ?>
         <?php endif ?>
-
-        <!-- These codes has change -->
-        <?php
-            $telephoneAttribute = $block->getCustomer()->getCustomAttribute('telephone');
-            $telephoneDefaultValue = '';
-            if($telephoneAttribute){
-                $telephoneDefaultValue = $telephoneAttribute->getValue();
-            }
-        ?>
-        <?= $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class)->setObject($block->getCustomer())->toHtml() ?>
-        <div class="field">
-            <label class="label" for="telephone">
-                <span>
-                    <?php echo $block->escapeHtmlAttr(__('Telephone')) ?>
-                </span>
-                <input type="text" name="telephone" id="telephone" data-role="telephone" value="<?= $telephoneDefaultValue; ?>"
-                title="<?php echo $block->escapeHtmlAttr(__('Telephone')) ?>" class="input-text" />
-            </label>
-        </div>
-        <!-- The End to change -->
-
         <?php if ($_taxvat->isEnabled()) : ?>
             <?= $_taxvat->setTaxvat($block->getCustomer()->getTaxvat())->toHtml() ?>
         <?php endif ?>
         <?php if ($_gender->isEnabled()) : ?>
             <?= $_gender->setGender($block->getCustomer()->getGender())->toHtml() ?>
         <?php endif ?>
+
+        <!-- These code has change  -->
+        
+        <?php
+            $telephoneAttribute = $block->getCustomer()->getCustomAttribute('telephone');
+            $telephoneDefaultValue = '';
+            if ($telephoneAttribute) {
+                $telephoneDefaultValue = $telephoneAttribute->getValue();
+            }
+        ?>
+
+        <div class="field">
+            <label class="label" for="telephone">
+                <span><?= $block->escapeHtmlAttr(__('Telephone')) ?></span>
+            </label>
+            <input type="text" name="telephone" id="telephone" data-role="telephone" value="<?= $telephoneDefaultValue; ?>" title="<?= $block->escapeHtmlAttr(__('Telephone')) ?>" class="input-text" />
+        </div>
+
+        <!-- End -->
+
         <div class="field choice">
             <input type="checkbox" name="change_email" id="change-email" data-role="change-email" value="1" title="<?= $block->escapeHtmlAttr(__('Change Email')) ?>" class="checkbox" />
             <label class="label" for="change-email"><span><?= $block->escapeHtml(__('Change Email')) ?></span></label>
