@@ -35,11 +35,13 @@
             }
         ?>
 
-        <div class="field">
+        <div class="field required">
             <label class="label" for="telephone">
                 <span><?= $block->escapeHtmlAttr(__('Telephone')) ?></span>
             </label>
-            <input type="text" name="telephone" id="telephone" data-role="telephone" value="<?= $telephoneDefaultValue; ?>" title="<?= $block->escapeHtmlAttr(__('Telephone')) ?>" class="input-text" />
+            <div class="control">
+                <input type="text" name="telephone" id="telephone" data-role="telephone" value="<?= $telephoneDefaultValue; ?>" title="<?= $block->escapeHtmlAttr(__('Telephone')) ?>" class="input-text" />
+            </div>
         </div>
 
         <!-- End -->
