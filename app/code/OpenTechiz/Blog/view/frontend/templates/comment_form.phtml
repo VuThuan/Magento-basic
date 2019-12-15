@@ -1,0 +1,12 @@
+<?php
+    $form_url = $block->getFormAction();
+?>
+<script type="text/x-magento-init">
+    {
+        "*":{
+            "OpenTechiz/js/commentajax":{
+                "AjaxCommentPostUrl": "<?php echo $form_url; ?>"
+            }
+        }
+    }
+</script>

@@ -24,7 +24,7 @@ class Banner extends AbstractModel
      */
     protected function _construct()
     {
-        $this->_init(PHPTest\BannerSlider\Model\ResourceModel\Banner::class);
+        $this->_init(\PHPTest\BannerSlider\Model\ResourceModel\Banner::class);
     }
 
     /**
