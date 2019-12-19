@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+    /**
+     * Webkul Grid DI
+     *
+     * @category    Webkul
+     * @package     Webkul_Grid
+     * @author      Webkul Software Private Limited
+     *
+     */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+     <virtualType name="Webkul\Grid\Model\ResourceModel\Grid\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">wk_grid_records</argument>
+            <argument name="resourceModel" xsi:type="string">Webkul\Grid\Model\ResourceModel\Grid</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <!--data provider name which used in grid ui component file -->
+                <item name="grid_record_grid_list_data_source" xsi:type="string">Webkul\Grid\Model\ResourceModel\Grid\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
