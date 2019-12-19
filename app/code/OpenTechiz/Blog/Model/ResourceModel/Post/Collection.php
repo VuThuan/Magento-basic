@@ -8,7 +8,7 @@ class Collection extends AbstractCollection
 {
     protected $_idFieldName = 'post_id';
 
-    protected function __construct()
+    protected function _construct()
     {
         $this->_init('OpenTechiz\Blog\Model\Post', 'OpenTechiz\Blog\Model\ResourceModel\Post');
     }

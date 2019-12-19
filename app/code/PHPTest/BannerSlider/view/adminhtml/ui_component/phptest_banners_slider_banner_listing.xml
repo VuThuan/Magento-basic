@@ -168,7 +168,7 @@
                 <label translate="true">URL Key</label>
             </settings>
         </column>
-        <column name="image" class="PHPTest\BannerSlider\Ui\Component\Listing\Column\Image">
+        <!-- <column name="image" class="PHPTest\BannerSlider\Ui\Component\Listing\Column\Image">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/thumbnail</item>
@@ -177,7 +177,7 @@
                     <item name="label" xsi:type="string" translate="true">Image</item>
                 </item>
             </argument>
-        </column>
+        </column> -->
         
         <!-- <column name="status">
             <argument name="data" xsi:type="array">

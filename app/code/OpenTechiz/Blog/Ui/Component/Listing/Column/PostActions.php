@@ -7,7 +7,7 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
-class PostAction extends Column
+class PostActions extends Column
 {
     /** Url part */
     const BLOG_URL_PATH_EDIT   =   'blog/post/edit';

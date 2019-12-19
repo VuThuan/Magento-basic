@@ -1,24 +1,30 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
 
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory;
-use Magento\Framework\Controller\ResultFactory;
+
 /**
- * Class MassDisable
+ * Class MassDelete
  */
-class MassDisable  extends \Magento\Backend\App\Action
+class MassDelete extends \Magento\Backend\App\Action
 {
     /**
      * @var Filter
      */
     protected $filter;
+
     /**
      * @var CollectionFactory
      */
     protected $collectionFactory;
+
     /**
      * @param Context $context
      * @param Filter $filter
@@ -30,6 +36,7 @@ class MassDisable  extends \Magento\Backend\App\Action
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
+
     /**
      * Execute action
      *
@@ -39,13 +46,17 @@ class MassDisable  extends \Magento\Backend\App\Action
     public function execute()
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
-        foreach ($collection as $item) {
-            $item->setIsActive(false);
-            $item->save();
+        $collectionSize = $collection->getSize();
+
+        foreach ($collection as $page) {
+            $page->delete();
         }
-        $this->messageManager->addSuccess(__('A total of %1 record(s) have been disabled.', $collection->getSize()));
+
+        $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been deleted.', $collectionSize));
+
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+        
         return $resultRedirect->setPath('*/*/');
     }
 }

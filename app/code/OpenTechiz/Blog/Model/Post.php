@@ -4,15 +4,20 @@ namespace OpenTechiz\Blog\Model;
 
 use Magento\Framework\Model\AbstractModel;
 use OpenTechiz\Blog\Api\Data\PostInterface;
+use Magento\Framework\DataObject\IdentityInterface;
 
-class Post extends AbstractModel implements PostInterface
+use Magento\Framework\Api\AttributeValueFactory;
+use Magento\Framework\Api\ExtensionAttributesFactory;
+
+class Post extends AbstractModel implements PostInterface,IdentityInterface
 {
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 0;
+    const CACHE_TAG='opentechiz_blog_post';
 
-    protected $_eventPrefix = 'blog_post';
+    //const CACHE_POST_COMMENT_TAG = "opentechiz_blog_post_comment";
 
-    protected function __construct()
+    protected function _construct()
     {
         $this->_init('OpenTechiz\Blog\Model\ResourceModel\Post');
     }
@@ -25,6 +30,20 @@ class Post extends AbstractModel implements PostInterface
     public function getAvailableStatuses()
     {
         return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
+    }
+
+    /**
+     * Get identities
+     *
+     * @return array
+     */
+    public function getIdentities()
+    {
+        $identities = [self::CACHE_TAG . '_' . $this->getID()];
+        if ($this->isObjectNew()) {
+            $identities[] = self::CACHE_TAG;
+        }
+        return $identities;
     }
 
     /**
