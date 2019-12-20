@@ -9,7 +9,7 @@
 
                         <resource id="OpenTechiz_Blog::post" translate="title" title="Blog Posts" sortOrder="40">
                             <resource id="OpenTechiz_Blog::save" translate="title" title="Save Blog Post" sortOrder="10" />
-                            <resource id="OpenTechiz_Blog::post_delete" translate="title" title="Delete Blog Post" sortOrder="20" />
+                            <resource id="OpenTechiz_Blog::delete" translate="title" title="Delete Blog Post" sortOrder="20" />
                         </resource>
 
                     </resource>

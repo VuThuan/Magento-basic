@@ -3,17 +3,17 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
+namespace OpenTechiz\Blog\Model\ResourceModel\Comment;
 
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Request\DataPersistorInterface;
 
 /**
- * Save Blog Posts action.
+ * Save Comment Blog Posts action.
  */
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'OpenTechiz_Blog::post';   
+    const ADMIN_RESOURCE = 'OpenTechiz_Blog::comment_post';   
 
     /**
      * @var PostDataProcessor
@@ -26,7 +26,7 @@ class Save extends Action
     protected $dataPersistor;
 
     /**
-     * @var \OpenTechiz\Blog\Model\PostFactory
+     * @var \OpenTechiz\Blog\Model\CommentFactory
      */
     private $pageFactory;
 
@@ -35,15 +35,15 @@ class Save extends Action
     /**
      * @param Action\Context $context
      * @param \Magento\Backend\Model\Session $backendSession
-     * @param \OpenTechiz\Blog\Model\PostFactory|null $pageFactory
+     * @param \OpenTechiz\Blog\Model\CommentFactory|null $pageFactory
      */
     public function __construct(
-        \OpenTechiz\Blog\Model\PostFactory $postFactory,
+        \OpenTechiz\Blog\Model\CommentFactory $commentFactory,
         \Magento\Backend\Model\Session $backendSession,
         Action\Context $context
     )
     {
-        $this->_postFactory = $postFactory;
+        $this->_commentFactory = $commentFactory;
         $this->_backendSession = $backendSession;
         parent::__construct($context);
     }
@@ -61,25 +61,25 @@ class Save extends Action
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
             /** @var \OpenTechiz\Blog\Model\Comment $model */
-            $model = $this->_postFactory->create();
-            $id = $this->getRequest()->getParam('post_id');
+            $model = $this->_commentFactory->create();
+            $id = $this->getRequest()->getParam('comment_id');
             if ($id) {
                 $model->load($id);
             }
-            $model->setTitle($data['title']);
-            $model->setContent($data['content']);
-            $model->setUrlKey($data['url_key']);
+            $model->setComment($data['comment']);
+            $model->setPostId($data['post_id']);
             $model->setIsActive($data['is_active']);
+            $model->setCustomerId($data['customer_id']);
             $this->_eventManager->dispatch(
-                'blog_post_prepare_save',
-                ['post' => $model, 'request' => $this->getRequest()]
+                'blog_comment_prepare_save',
+                ['comment' => $model, 'request' => $this->getRequest()]
             );
             try {
                 $model->save();
-                $this->messageManager->addSuccess(__('You saved this Post.'));
+                $this->messageManager->addSuccess(__('You saved this Comment.'));
                 $this->_backendSession->setFormData(false);
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['post_id' => $model->getPostId(), '_current' => true]);
+                    return $resultRedirect->setPath('*/*/edit', ['comment_id' => $model->getCommentID(), '_current' => true]);
                 }
                 return $resultRedirect->setPath('*/*/');
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
@@ -87,10 +87,10 @@ class Save extends Action
             } catch (\RuntimeException $e) {
                 $this->messageManager->addError($e->getMessage());
             } catch (\Exception $e) {
-                $this->messageManager->addException($e, __('Something went wrong while saving the post.'));
+                $this->messageManager->addException($e, __('Something went wrong while saving the comment.'));
             }
             $this->_getSession()->setFormData($data);
-            return $resultRedirect->setPath('*/*/edit', ['post_id' => $this->getRequest()->getParam('post_id')]);
+            return $resultRedirect->setPath('*/*/edit', ['comment_id' => $this->getRequest()->getParam('comment_id')]);
         }
         return $resultRedirect->setPath('*/*/');
     }

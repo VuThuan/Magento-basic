@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
+namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
@@ -39,19 +39,20 @@ class Index extends \Magento\Backend\App\Action
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('OpenTechiz_Blog::post')
-                   ->addBreadcrumb(__('Blog Posts'), __('Blog Posts'))
-                   ->getConfig()->getTitle()->prepend(__('Posts'));
+        $resultPage->setActiveMenu('OpenTechiz_Blog::comment_post')
+                   ->addBreadcrumb(__('Comment Posts'), __('Comment Posts'))
+                   ->addBreadcrumb(__('Manage Blog Comments'), __('Manage Blog Comments'))
+                   ->getConfig()->getTitle()->prepend(__('Comment Post'));
         return $resultPage;
     }
 
     /**
-     * Is the user allowed to view the blog post grid.
+     * Is the user allowed to view the comment post grid.
      *
      * @return bool
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('OpenTechiz_Blog::post');
+        return $this->_authorization->isAllowed('OpenTechiz_Blog::comment_post');
     }
 }

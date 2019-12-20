@@ -6,8 +6,6 @@
 namespace OpenTechiz\Blog\Block\Adminhtml\Post\Edit;
 
 use Magento\Backend\Block\Widget\Context;
-use OpenTechiz\Blog\Api\PostRepositoryInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class GenericButton
@@ -19,21 +17,23 @@ class GenericButton
      */
     protected $context;
 
-    /**
-     * @var PostRepositoryInterface
+     /**
+     * Registry
+     *
+     * @var \Magento\Framework\Registry
      */
-    protected $postRepository;
+    protected $registry;
 
     /**
      * @param Context $context
-     * @param PostRepositoryInterface $postRepository
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
         Context $context,
-        PostRepositoryInterface $postRepository
+        \Magento\Framework\Registry $registry
     ) {
         $this->context = $context;
-        $this->postRepository = $postRepository;
+        $this->registry = $registry;
     }
 
     /**
@@ -43,13 +43,8 @@ class GenericButton
      */
     public function getPostId()
     {
-        try {
-            return $this->postRepository->getById(
-                $this->context->getRequest()->getParam('post_id')
-            )->getId();
-        } catch (NoSuchEntityException $e) {
-        }
-        return null;
+        $post = $this->registry->registry('post');
+        return $post ? $post->getPostId() : null; 
     }
 
     /**

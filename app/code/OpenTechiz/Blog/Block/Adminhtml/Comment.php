@@ -8,7 +8,7 @@ namespace OpenTechiz\Blog\Block\Adminhtml;
 /**
  * Adminhtml blog post content block
  */
-class Post extends \Magento\Backend\Block\Widget\Grid\Container
+class Comment extends \Magento\Backend\Block\Widget\Grid\Container
 {
     /**
      * Block constructor
@@ -17,14 +17,14 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Container
      */
     protected function _construct()
     {
-        $this->_controller = 'adminhtml_post';
+        $this->_controller = 'adminhtml_comment';
         $this->_blockGroup = 'OpenTechiz_Blog';
-        $this->_headerText = __('Manage Blog Posts');
+        $this->_headerText = __('Manage Comment Posts');
 
         parent::_construct();
 
         if ($this->_isAllowedAction('OpenTechiz_Blog::save')) {
-            $this->buttonList->update('add', 'label', __('Add New Post'));
+            $this->buttonList->update('add', 'label', __('Add New Comment'));
         } else {
             $this->buttonList->remove('add');
         }

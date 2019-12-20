@@ -6,17 +6,35 @@ use Magento\Framework\Model\AbstractModel;
 use OpenTechiz\Blog\Api\Data\PostInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 
-use Magento\Framework\Api\AttributeValueFactory;
-use Magento\Framework\Api\ExtensionAttributesFactory;
-
 class Post extends AbstractModel implements PostInterface,IdentityInterface
 {
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 0;
-    const CACHE_TAG='opentechiz_blog_post';
+    
+    const CACHE_POST_COMMENT_TAG = "opentechiz_blog_post_comment";
 
-    //const CACHE_POST_COMMENT_TAG = "opentechiz_blog_post_comment";
+    /**
+     * CMS page cache tag.
+     */
+    const CACHE_TAG = 'opentechiz_blog_post';
 
+    /**
+     * @var string
+     */
+    protected $_cacheTag = 'opentechiz_blog_post';
+
+    /**
+     * Prefix of model events names.
+     *
+     * @var string
+     */
+    protected $_eventPrefix = 'opentechiz_blog_post';
+
+    /**
+     * Construct.
+     *
+     * @return void
+     */
     protected function _construct()
     {
         $this->_init('OpenTechiz\Blog\Model\ResourceModel\Post');

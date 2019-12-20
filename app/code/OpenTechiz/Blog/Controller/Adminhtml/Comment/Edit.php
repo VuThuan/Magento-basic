@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
+namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
 use Magento\Backend\App\Action;
 
@@ -49,9 +49,9 @@ class Edit extends Action
         // load layout, set active menu and breadcrumbs
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('OpenTechiz_Blog::post')
-            ->addBreadcrumb(__('Blog'), __('Blog'))
-            ->addBreadcrumb(__('Manage Blog Posts'), __('Manage Blog Posts'));
+        $resultPage->setActiveMenu('OpenTechiz_Blog::comment_post')
+            ->addBreadcrumb(__('Comment'), __('Comment'))
+            ->addBreadcrumb(__('Manage Comment Blog Posts'), __('Manage Comment Blog Posts'));
         return $resultPage;
     }
 
@@ -64,32 +64,32 @@ class Edit extends Action
     public function execute()
     {
         // 1. Get ID and create model
-        $id = $this->getRequest()->getParam('post_id');
+        $id = $this->getRequest()->getParam('comment_id');
         $model = $this->_objectManager->create(\OpenTechiz\Blog\Model\Post::class);
 
         // 2. Initial checking
         if ($id) {
             $model->load($id);
             if (!$model->getId()) {
-                $this->messageManager->addErrorMessage(__('This post no longer exists.'));
+                $this->messageManager->addErrorMessage(__('This Comment no longer exists.'));
                 /** \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();
                 return $resultRedirect->setPath('*/*/');
             }
         }
 
-        $this->_coreRegistry->register('blog_post', $model);
+        $this->_coreRegistry->register('blog_comment', $model);
 
         // 5. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->_initAction();
         $resultPage->addBreadcrumb(
-            $id ? __('Edit Blog Posts') : __('New Blog Posts'),
-            $id ? __('Edit Blog Posts') : __('New Blog Posts')
+            $id ? __('Edit Comment Posts') : __('New Comment Posts'),
+            $id ? __('Edit Comment Posts') : __('New Comment Posts')
         );
-        $resultPage->getConfig()->getTitle()->prepend(__('Blog Posts'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Comment Posts'));
         $resultPage->getConfig()->getTitle()
-            ->prepend($model->getId() ? $model->getTitle() : __('New Blog Posts'));
+            ->prepend($model->getId() ? $model->getTitle() : __('New Comment Posts'));
 
         return $resultPage;
     }

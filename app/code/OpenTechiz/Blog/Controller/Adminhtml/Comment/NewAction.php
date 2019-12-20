@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
+namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
 class NewAction extends \Magento\Backend\App\Action
 {

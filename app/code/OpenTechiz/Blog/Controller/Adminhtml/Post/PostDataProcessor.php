@@ -4,7 +4,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace OpenTechiz\Blog\Model\ResourceModel\Post;
+namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
 
 use Magento\Cms\Model\Page\DomValidationState;
 use Magento\Framework\Config\Dom\ValidationException;
