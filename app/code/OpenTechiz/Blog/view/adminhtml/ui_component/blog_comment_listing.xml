@@ -137,14 +137,6 @@
                     </item>
                 </argument>
             </filterInput>
-            <!-- <filterInput name="author">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="dataScope" xsi:type="string">author</item>
-                        <item name="label" xsi:type="string" translate="true">Author</item>
-                    </item>
-                </argument>
-            </filterInput> -->
             <filterSelect name="is_active">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
@@ -153,7 +145,7 @@
                         <item name="caption" xsi:type="string" translate="true">Select...</item>
                         <item name="options" xsi:type="array">
                             <item name="disable" xsi:type="array">
-                                <item name="value" xsi:type="string">0</item>
+                                <item name="value" xsi:type="string">2</item>
                                 <item name="label" xsi:type="string" translate="true">Disabled</item>
                             </item>
                             <item name="enable" xsi:type="array">

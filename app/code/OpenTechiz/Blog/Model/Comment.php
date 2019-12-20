@@ -8,8 +8,8 @@ use Magento\Framework\DataObject\IdentityInterface;
 
 class Comment extends AbstractModel implements CommentInterface,IdentityInterface
 {
-    const STATUS_ENABLED  = 0;
-    const STATUS_DISABLED = 1;
+    const STATUS_ENABLED  = 1;
+    const STATUS_DISABLED = 0;
     const STATUS_PENDING  = 2;
     
     const CACHE_POST_COMMENT_TAG = "opentechiz_blog_post_comment";
