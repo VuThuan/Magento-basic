@@ -23,7 +23,7 @@ class Comment extends \Magento\Backend\Block\Widget\Grid\Container
 
         parent::_construct();
 
-        if ($this->_isAllowedAction('OpenTechiz_Blog::save')) {
+        if ($this->_isAllowedAction('OpenTechiz_Blog::save_comment')) {
             $this->buttonList->update('add', 'label', __('Add New Comment'));
         } else {
             $this->buttonList->remove('add');

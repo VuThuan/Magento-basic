@@ -65,7 +65,7 @@ class Edit extends Action
     {
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('comment_id');
-        $model = $this->_objectManager->create(\OpenTechiz\Blog\Model\Post::class);
+        $model = $this->_objectManager->create(\OpenTechiz\Blog\Model\Comment::class);
 
         // 2. Initial checking
         if ($id) {

@@ -26,7 +26,7 @@ class NewAction extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('OpenTechiz_Blog::save');
+        return $this->_authorization->isAllowed('OpenTechiz_Blog::save_comment');
     }
     
     /**

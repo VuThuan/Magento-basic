@@ -13,8 +13,6 @@ use Magento\Framework\App\Request\DataPersistorInterface;
  */
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'OpenTechiz_Blog::comment_post';   
-
     /**
      * @var PostDataProcessor
      */
@@ -24,18 +22,13 @@ class Save extends Action
      * @var DataPersistorInterface
      */
     protected $dataPersistor;
-
-    /**
-     * @var \OpenTechiz\Blog\Model\CommentFactory
-     */
-    private $pageFactory;
-
+    
     protected $_backendSession;
 
     /**
      * @param Action\Context $context
      * @param \Magento\Backend\Model\Session $backendSession
-     * @param \OpenTechiz\Blog\Model\CommentFactory|null $pageFactory
+     * @param \OpenTechiz\Blog\Model\CommentFactory|null $commentFactory
      */
     public function __construct(
         \OpenTechiz\Blog\Model\CommentFactory $commentFactory,
@@ -100,6 +93,6 @@ class Save extends Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('OpenTechiz_Blog::save');
+        return $this->_authorization->isAllowed('OpenTechiz_Blog::save_comment');
     }
 }

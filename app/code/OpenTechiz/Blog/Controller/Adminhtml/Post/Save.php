@@ -60,7 +60,7 @@ class Save extends Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            /** @var \OpenTechiz\Blog\Model\Comment $model */
+            /** @var \OpenTechiz\Blog\Model\Post $model */
             $model = $this->_postFactory->create();
             $id = $this->getRequest()->getParam('post_id');
             if ($id) {

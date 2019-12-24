@@ -17,39 +17,26 @@ namespace OpenTechiz\Blog\Block\Adminhtml\Comment\Edit;
 class Form extends \Magento\Backend\Block\Widget\Form\Generic
 {
     /**
-     * @var \Magento\Store\Model\System\Store
+     * @var \OpenTechiz\Blog\Model\Post\Source\Status
      */
-    protected $_systemStore;
+    protected $_commentPost;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Data\FormFactory $formFactory
      * @param \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig
-     * @param \Magento\Store\Model\System\Store $systemStore
      * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
-        \Magento\Store\Model\System\Store $systemStore,
+        \OpenTechiz\Blog\Model\Post\Source\Status $_commentPost, 
         array $data = []
     ) {
-        $this->_systemStore = $systemStore;
+        $this->_commentPost = $_commentPost;
         parent::__construct($context, $registry, $formFactory, $data);
-    }
-
-    /**
-     * Init form
-     *
-     * @return void
-     */
-    protected function _construct()
-    {
-        parent::_construct();
-        $this->setId('comment_form');
-        $this->setTitle(__('Comment Information'));
     }
 
     /**
@@ -59,7 +46,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      */
     protected function _prepareForm()
     {
-        /** @var \OpenTechiz\Blog\Model\Post $model */
+        /** @var \OpenTechiz\Blog\Model\Comment $model */
         $model = $this->_coreRegistry->registry('blog_comment');
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create(
@@ -70,9 +57,13 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             'base_fieldset',
             ['legend' => __('General Information'), 'class' => 'fieldset-wide']
         );
-        if ($model->getID()) {
+
+        if ($model->getCommentID()) {
             $fieldset->addField('comment_id', 'hidden', ['name' => 'comment_id']);
+            $fieldset->addField('post_id', 'hidden', ['name' => 'post_id']);
         }
+
+        $fieldset->addField('customer_id', 'hidden', ['name' => 'customer_id']);
         $fieldset->addField(
             'is_active',
             'select',
@@ -84,17 +75,31 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'options' => [ '2' => __('Pending'), '1' => __('Enabled'), '0' => __('Disabled')]
             ]
         );
-        if (!$model->getId()) {
+        if (!$model->getCommentID()) {
             $model->setData('is_active', '0');
+            $model->setData('customer_id', '1');
+            
+            $fieldset->addField(
+                'post_id',
+                'select',
+                [
+                    'label' => __('Post'),
+                    'title' => __('Post'),
+                    'name'  => 'post_id',
+                    'required' => true,
+                    'style' => 'width: 300px',
+                    'values' => $this->_commentPost->toOptionArray()
+                ]
+            );
         }
         $fieldset->addField(
-            'content',
+            'comment',
             'editor',
             [
-                'name' => 'content',
+                'name' => 'comment',
                 'label' => __('Content'),
                 'title' => __('Content'),
-                'style' => 'height:36em',
+                'style' => 'height:24em',
                 'required' => true
             ]
         );

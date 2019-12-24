@@ -1,0 +1,18 @@
+<!--@subject {{ var data.subject }} @-->
+<!--@vars{
+    "var data.name": "User name"
+} @-->
+{{ template config_path="design/email/header_template" }}
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{ trans "Hello %user_name, " user_name = $data.name }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{trans "Your comment(s) waiting for approval!"}}
+        </td>
+    </tr>
+</table>
+{{ template config_path="design/email/footer_template" }}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="blog_comment_notification_email_template" label="New Order" file="comment_notification_email.html" type="html" module="OpenTechiz_Blog" area="frontend" />
+    <template id="blog_comment_remind_email_template" label="Remind Email" file="remind_email.html" type="html" module="OpenTechiz_Blog" area="frontend" />
+</config>

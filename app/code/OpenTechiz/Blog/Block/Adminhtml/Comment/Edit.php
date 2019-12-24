@@ -41,11 +41,11 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         $this->_blockGroup = 'OpenTechiz_Blog';
 
         parent::_construct();
-        
+
         $this->buttonList->update('save', 'label', __('Save Comment'));
         $this->buttonList->remove('delete');
         $this->buttonList->add(
-            'saveandcontinue',
+            'save_and_continue',
             [
                 'label' => __('Save and Continue Edit'),
                 'class' => 'save',
@@ -55,7 +55,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
                     ]
                 ]
             ],
-            10
+            101
         );
     }
 
@@ -66,8 +66,9 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getHeaderText()
     {
-        if ($this->_coreRegistry->registry('blog_post')->getId()) {
-            return __("Edit Comment '%1'", $this->escapeHtml($this->_coreRegistry->registry('blog_comment')->getTitle()));
+        $item = $this->_coreRegistry->registry('blog_comment');
+        if ($item->getCommentId()) {
+            return __("Edit Comment :  '%1'", $this->escapeHtml($item->getComment()));
         } else {
             return __('New Comment');
         }
