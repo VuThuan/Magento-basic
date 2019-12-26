@@ -1,0 +1,32 @@
+<h2><?php echo __('List comment 2')?></h2>
+
+<ul class="blog-post-list">
+    <?php /** $var $post \OpenTechiz\Blog\Model\Post */?>
+    <?php foreach ($block->getComments() as $post):
+        if ($post->getStatusId() == 1 || $post->getCustomerId() == $block->getCustomerId()) {
+        ?>
+
+        <li class="blog-post-list-item">
+            <h3 class="blog-post-item-title">
+                <?php echo $block->getNameUser($post->getCustomerId()) ;?>
+            </h3>
+
+<!--            <div class="blog-post-item-content">-->
+<!--                --><?php // echo $post->getBlogId();?>
+<!--            </div>-->
+
+            <div class="blog-post-item-content">
+                <?php  echo $post->getComment();?>
+            </div>
+
+<!--            <div class="blog-post-item-content">-->
+<!--                --><?php // echo $post->getStatusId();?>
+<!--            </div>-->
+
+            <div class="blog-post-item-meta">
+                <strong><?php echo __('Create at: ') ?></strong> <?php echo $post->getCreationAt() ?>
+            </div>
+        </li>
+    <?php }
+        endforeach;?>
+</ul>

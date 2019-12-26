@@ -27,7 +27,7 @@ class Router implements RouterInterface
         $url_key = rtrim($url_key, '/');
         $post = $this->_postFactory->create();
         $post_id = $post->checkUrlKey($url_key);
-        
+
         if (!$post_id) {
             return null;
         }
