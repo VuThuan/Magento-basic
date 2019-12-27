@@ -18,6 +18,6 @@ class Index extends Action
 
     public function execute()
     {
-        $this->resultPageFactory->create();
+        return $this->resultPageFactory->create();
     }
 }
