@@ -30,7 +30,7 @@ class InstallSchema implements InstallSchemaInterface
             ->addColumn('title', Table::TYPE_TEXT, 255, ['nullable' => false], 'Blog Title')
             ->addColumn('content', Table::TYPE_TEXT, '2M', [], 'Blog Content')
             ->addColumn('is_active', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Is Post Active?')
-            ->addColumn('creation_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Creation Time')
+            ->addColumn('creation_time', Table::TYPE_TIMESTAMP, null, ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT], 'Creation Time')
             ->addColumn('update_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Update Time')
             ->addIndex($installer->getIdxName('blog_post', ['url_key']), ['url_key'])
             ->setComment('Blog Posts');

@@ -154,7 +154,11 @@ class Post extends AbstractModel implements PostInterface,IdentityInterface
      * @{initialize}
      */
     function setUpdateTime($updateTime){
-        $this->setData(self::UPDATE_TIME,$updateTime);
+        if($updateTime != ''){
+            $this->setData(self::UPDATE_TIME,$updateTime);    
+        } else{
+            $this->setData(self::CREATION_TIME, $updateTime);
+        }
         return $this;
     }
     /**
