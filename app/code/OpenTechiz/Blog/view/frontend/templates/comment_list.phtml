@@ -1,32 +1,29 @@
-<h2><?php echo __('List comment 2')?></h2>
+<h2><?php echo __('Comment Post')?></h2>
 
 <ul class="blog-post-list">
-    <?php /** $var $post \OpenTechiz\Blog\Model\Post */?>
-    <?php foreach ($block->getComments() as $post):
-        if ($post->getStatusId() == 1 || $post->getCustomerId() == $block->getCustomerId()) {
+    <?php 
+        
+        /** @var \OpenTechiz\Blog\Block\CommentList $block */
+    ?>
+    <?php 
+    /** @var \OpenTechiz\Blog\Model\Comment $comment */
+    foreach ($block->getComments() as $comment):
+        if ($comment->getIsActive() == 1 || $comment->getCustomerId() == $block->getCustomerId()) {
         ?>
 
         <li class="blog-post-list-item">
             <h3 class="blog-post-item-title">
-                <?php echo $block->getNameUser($post->getCustomerId()) ;?>
+                <?php echo $block->getNameUser($comment->getCustomerId()) ;?>
             </h3>
 
-<!--            <div class="blog-post-item-content">-->
-<!--                --><?php // echo $post->getBlogId();?>
-<!--            </div>-->
-
             <div class="blog-post-item-content">
-                <?php  echo $post->getComment();?>
+                <?php  echo $comment->getComment();?>
             </div>
 
-<!--            <div class="blog-post-item-content">-->
-<!--                --><?php // echo $post->getStatusId();?>
-<!--            </div>-->
-
             <div class="blog-post-item-meta">
-                <strong><?php echo __('Create at: ') ?></strong> <?php echo $post->getCreationAt() ?>
+                <strong><?php echo __('Create at: ') ?></strong> <?php echo $comment->getCreatedAt() ?>
             </div>
         </li>
     <?php }
-        endforeach;?>
+    endforeach;?>
 </ul>

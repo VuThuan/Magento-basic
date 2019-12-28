@@ -88,7 +88,7 @@ class Post extends AbstractModel implements PostInterface,IdentityInterface
     function getUrl(){
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $urlBuilder=$objectManager->get("Magento\Framework\UrlInterface");
-        return $urlBuilder->getUrl("blog/".$this->getUrlKey());
+        return $urlBuilder->getUrl("blog/".$this->getID());
     }
     /**
      * @{initialize}
@@ -154,11 +154,7 @@ class Post extends AbstractModel implements PostInterface,IdentityInterface
      * @{initialize}
      */
     function setUpdateTime($updateTime){
-        if($updateTime != ''){
-            $this->setData(self::UPDATE_TIME,$updateTime);    
-        } else{
-            $this->setData(self::CREATION_TIME, $updateTime);
-        }
+        $this->setData(self::UPDATE_TIME,$updateTime);    
         return $this;
     }
     /**

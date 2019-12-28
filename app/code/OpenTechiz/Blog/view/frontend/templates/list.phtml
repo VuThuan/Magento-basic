@@ -1,21 +1,22 @@
 <?php
-
-/** @var $block \OpenTechiz\Blog\Block\PostList */ ?>
+    /** @var  \OpenTechiz\Blog\Block\PostList $block */ 
+?>
 <h1><?= __('Latest Blog Posts') ?></h1>
 <ul class="blog-post-list">
-    <?php /** @var $post \OpenTechiz\Blog\Model\Post */ ?>
+    <?php /** @var \OpenTechiz\Blog\Model\Post $post*/ ?>
     <?php foreach ($block->getPosts() as $post) : ?>
         <li class="blog-post-list-item">
             <h3 class="blog-post-item-title">
-                <a href="<?= $post->getUrl() ?>"><?= $post->getTitle() ?></a>
+                <a href="/magento2/blog/view/index/id/<?= $post->getID() ?>"><?= $post->getTitle() ?></a>
             </h3>
 
             <div class="blog-post-item-content">
                 <?= $post->getContent() ?>
             </div>
 
+            <br>
             <div class="blog-post-item-meta">
-                <strong><?= __('Created at') ?></strong><?= $post->getCreationTime() ?>
+                <strong><?= __('Last updated : ') ?></strong><?= $post->getUpdateTime() ?>
             </div>
         </li>
     <?php endforeach; ?>
