@@ -24,7 +24,7 @@ class Reminder
         $comments = $this->_commentCollectionFactory
                 ->create()
                 ->addFieldToFilter('is_active', 0)
-                ->addFieldToFilter('creation_time', ["lteq" => $from]);
+                ->addFieldToFilter('created_time', ["lteq" => $from]);
         $commentCount = $comments->count();
         // get admins list
         $admins = $this->_userCollection->create();
