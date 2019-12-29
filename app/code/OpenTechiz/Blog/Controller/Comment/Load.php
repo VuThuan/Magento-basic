@@ -37,14 +37,14 @@ class Load extends Action
         $postData = (array) $this->getRequest()->getPostValue();
 
         $post_id = $postData['post_id'];
-        $user_id = $this->_customerSession->getCustomer()->getId();
+        $customer_id = $this->_customerSession->getCustomer()->getId();
         $jsonResultResponse = $this->_resultJsonFactory->create();
 
         $comments = $this->_commentCollectionFactory
             ->create()
             ->addFieldToFilter('post_id', $post_id)
             ->addFieldToFilter('is_active', 0)
-            ->addFieldToFilter('user_id', $user_id)
+            ->addFieldToFilter('customer_id', $customer_id)
             ->addOrder(
                 CommentInterface::CREATED_AT,
                 CommentCollection::SORT_ORDER_DESC

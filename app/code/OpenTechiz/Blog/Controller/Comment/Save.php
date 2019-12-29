@@ -6,9 +6,6 @@ use \Magento\Framework\App\Action\Action;
 
 class Save extends Action
 {
-    /**
-     * @var \Magento\Framework\Controller\Result\JsonFactory
-     */
     protected $_commentFactory;
 
     protected $_resultJsonFactory;
@@ -72,6 +69,7 @@ class Save extends Action
 
         if (!$error) {
             // save data to database
+            /** @var \OpenTechiz\Blog\Model\Comment $model */
             $model = $this->_commentFactory->create();
             $model->addData([
                 "comment" => $postData['comment'],

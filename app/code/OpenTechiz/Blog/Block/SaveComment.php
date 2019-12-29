@@ -1,5 +1,6 @@
 <?php
 namespace OpenTechiz\Blog\Block;
+
 class SaveComment extends \Magento\Framework\View\Element\Template
 {
     protected $_request;
@@ -20,34 +21,24 @@ class SaveComment extends \Magento\Framework\View\Element\Template
     
     public function getFormAction()
     {
-        return '/blog/comment/save';
+        return '/magento2/blog/comment/save';
     }
     
     public function getAjaxUrl()
     {
-        return '/blog/comment/load';
+        return '/magento2/blog/comment/load';
     }
     
     public function getPostId()
     {
         return $this->_request->getParam('id', false);
     }
-    
-    public function getAjaxNotificationLoadUrl()
-    {
-        return '/blog/notification/load';
-    }
-    
-    public function getSeenUrl()
-    {
-        return '/blog/notification/load';
-    }
-    
-    public function isLoggedIn()
+
+    public function isCustomerLoggedIn()
     {
         return $this->_customerSession->isLoggedIn();
-    }
-    
+    } 
+
     public function getCustomerId()
     {
         return $this->_customerSession->getCustomer()->getId();

@@ -11,12 +11,11 @@ define([
         var dataForm = $('#comment-form');
         dataForm.mage('validation', {});
 
-        $(document).on('click', '.submit', function() {
+        $(document).on('click', 'submit', function() {
             if(dataForm.valid()) {
                 event.preventDefault();
                 var param = dataForm.serialize();
-                // alert(param);
-                // alert('ok nuon');
+
                 $.ajax({
                     showLoader: true,
                     url: AjaxCommentPostUrl,
@@ -32,7 +31,7 @@ define([
                         $('.note').css('color','green');
                     }
 
-                    // alert('success');
+                    // alert('sdadsa');
                     document.getElementById('comment-form').reset();
                     return true;
                 });

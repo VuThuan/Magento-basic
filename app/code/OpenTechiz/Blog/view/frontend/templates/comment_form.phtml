@@ -1,17 +1,18 @@
-<form action="" method="post" id="comment-form"  >
-    <input type="hidden" name="blog_id" value="<?php echo $block->getPostId();?>">
-    <input type="hidden" name="customer_id" value="<?php echo $block->getCustomerId();?>">
-    <input type="text" name='comment' required placeholder='Add Comment' >
-    <br>
-    <br>
-    <input type="submit" class="submit" name='submit' value='Submit'>
-</form>
-<div class="note"></div>
-
 <?php
     /** @var \OpenTechiz\BLog\Block\SaveComment $block  */
     $form_url = $block->getFormAction() 
 ?>
+
+<form action="" method="post" id="comment-form"  >
+    <input type="hidden" name="blog_id" value="<?= $block->getPostId();?>">
+    <input type="hidden" name="customer_id" value="<? echo $block->getCustomerId();?>">
+    <input type="text" name='comment' required placeholder='Add Comment' >
+    <br>
+    <br>
+    <?php //print_r($block->getCustomerId()); ?>
+    <input type="submit" class="submit" name='submit' value='Submit'>
+</form>
+<div class="note"></div>
 
 <script type = "text/x-magento-init">
     {
