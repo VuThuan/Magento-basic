@@ -3,26 +3,16 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace OpenTechiz\Blog\Model\ResourceModel\Comment;
+namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
 use Magento\Backend\App\Action;
-use Magento\Framework\App\Request\DataPersistorInterface;
 
 /**
  * Save Comment Blog Posts action.
  */
 class Save extends Action
 {
-    /**
-     * @var PostDataProcessor
-     */
-    protected $dataProcessor;
-
-    /**
-     * @var DataPersistorInterface
-     */
-    protected $dataPersistor;
-    
+    /** @var \Magento\Backend\Model\Session  */
     protected $_backendSession;
 
     /** @var \OpenTechiz\Blog\Model\CommentFactory  */

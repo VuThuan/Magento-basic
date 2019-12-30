@@ -110,6 +110,6 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getSaveAndContinueUrl()
     {
-        return $this->getUrl('blog/*/save', ['_current' => true, 'back' => 'edit']);
+        return $this->getUrl('blog/*/save', ['_current' => true, 'back' => 'edit', 'active_tab' => null]);
     }
 }

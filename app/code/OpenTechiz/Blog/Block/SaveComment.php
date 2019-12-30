@@ -41,6 +41,6 @@ class SaveComment extends \Magento\Framework\View\Element\Template
 
     public function getCustomerId()
     {
-        return $this->_customerSession->getCustomer()->getId();
+        return $this->_customerSession->getCustomerId();
     }
 }

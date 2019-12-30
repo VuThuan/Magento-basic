@@ -5,7 +5,7 @@
 
 <form action="" method="post" id="comment-form"  >
     <input type="hidden" name="blog_id" value="<?= $block->getPostId();?>">
-    <input type="hidden" name="customer_id" value="<?= $block->getCustomerId();?>">
+    <input type="hidden" name="customer_id" value="<?//= $block->getCustomerId();?>">
     <input type="text" name='comment' required placeholder='Add Comment' >
     <br>
     <br>
@@ -13,12 +13,12 @@
 </form>
 <div class="note"></div>
 
-<!-- <script type = "text/x-magento-init">
+<script type = "text/x-magento-init">
     {
         "*" : {
                 "OpenTechiz_Blog/js/commentajax":{
-                    "AjaxCommentPostUrl": "<?php // echo $form_url; ?>"
+                    "AjaxCommentPostUrl": "<?php  echo $form_url; ?>"
                     }
               }
     }
-</script> -->
+</script>
