@@ -70,10 +70,8 @@ class Save extends Action
             $model->setContent($data['content']);
             $model->setUrlKey($data['url_key']);
             $model->setIsActive($data['is_active']);
-            $this->_eventManager->dispatch(
-                'blog_post_prepare_save',
-                ['post' => $model, 'request' => $this->getRequest()]
-            );
+            //event
+
             try {
                 $model->save();
                 $this->messageManager->addSuccess(__('You saved this Post.'));

@@ -77,7 +77,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
         if (!$model->getCommentID()) {
             $model->setData('is_active', '0');
-            $model->setData('customer_id', '1');
+            $model->setData('customer_id', '2');
             
             $fieldset->addField(
                 'post_id',

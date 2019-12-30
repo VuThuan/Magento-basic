@@ -42,21 +42,29 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
 
         parent::_construct();
 
-        $this->buttonList->update('save', 'label', __('Save Comment'));
-        $this->buttonList->remove('delete');
-        $this->buttonList->add(
-            'save_and_continue',
-            [
-                'label' => __('Save and Continue Edit'),
-                'class' => 'save',
-                'data_attribute' => [
-                    'mane-init' => [
-                        'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form']
+        if ($this->_isAllowedAction('OpenTechiz_Blog::save_comment')) {
+            $this->buttonList->update('save', 'label', __('Save Comment'));
+            $this->buttonList->add(
+                'saveandcontinue',
+                [
+                    'label' => __('Save and Continue Edit'),
+                    'class' => 'save',
+                    'data_attribute' => [
+                        'mage-init' => [
+                            'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
+                        ],
                     ]
-                ]
-            ],
-            101
-        );
+                ],
+                102
+            );
+        } else {
+            $this->buttonList->remove('save');
+        }
+        if ($this->_isAllowedAction('OpenTechiz_Blog::comment_delete')) {
+            $this->buttonList->update('delete', 'label', __('Delete Comment'));
+        } else {
+            $this->buttonList->remove('delete');
+        }
     }
 
     /**
@@ -72,5 +80,36 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         } else {
             return __('New Comment');
         }
+    }
+
+    /**
+     * Check permission for passed action
+     *
+     * @param string $resourceId
+     * @return bool
+     */
+    protected function _isAllowedAction($resourceId)
+    {
+        return $this->_authorization->isAllowed($resourceId);
+    }
+
+    /**
+     * Return save url for edit form
+     *
+     * @return string
+     */
+    public function getSaveUrl()
+    {
+        return $this->getUrl('blog/*/save', ['_current' => true, 'back' => null]);
+    }
+
+    /**
+     * Return save and continue url for edit form
+     *
+     * @return string
+     */
+    public function getSaveAndContinueUrl()
+    {
+        return $this->getUrl('blog/*/save', ['_current' => true, 'back' => 'edit']);
     }
 }

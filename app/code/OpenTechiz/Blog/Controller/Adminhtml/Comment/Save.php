@@ -25,6 +25,9 @@ class Save extends Action
     
     protected $_backendSession;
 
+    /** @var \OpenTechiz\Blog\Model\CommentFactory  */
+    protected $_commentFactory;
+
     /**
      * @param Action\Context $context
      * @param \Magento\Backend\Model\Session $backendSession
@@ -63,16 +66,14 @@ class Save extends Action
             $model->setPostId($data['post_id']);
             $model->setIsActive($data['is_active']);
             $model->setCustomerId($data['customer_id']);
-            $this->_eventManager->dispatch(
-                'blog_comment_prepare_save',
-                ['comment' => $model, 'request' => $this->getRequest()]
-            );
+            //event
+
             try {
                 $model->save();
                 $this->messageManager->addSuccess(__('You saved this Comment.'));
                 $this->_backendSession->setFormData(false);
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['comment_id' => $model->getCommentID(), '_current' => true]);
+                    return $resultRedirect->setPath('*/*/edit', ['comment_id' => $model->getCommentID(), '_current' => true ]);
                 }
                 return $resultRedirect->setPath('*/*/');
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
