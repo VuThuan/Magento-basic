@@ -15,7 +15,7 @@ class SaveComment extends \Magento\Framework\View\Element\Template
     )
     {
         $this->_request = $request;
-        $this->_customerSession = $customerSession;
+        $this->_customerSession = $customerSession; 
         parent::__construct($context, $data);
     }
     
@@ -34,13 +34,17 @@ class SaveComment extends \Magento\Framework\View\Element\Template
         return $this->_request->getParam('id', false);
     }
 
-    public function isCustomerLoggedIn()
-    {
-        return $this->_customerSession->isLoggedIn();
-    } 
-
-    public function getCustomerId()
-    {
-        return $this->_customerSession->getCustomerId();
+    public function getLoggedinCustomerId() {
+        if ($this->_customerSession->isLoggedIn()) {
+            return $this->_customerSession->getId();
+        }
+        return 'Chua dang nhap';
+    }
+ 
+    public function getCustomerData() {
+        if ($this->_customerSession->isLoggedIn()) {
+            return $this->_customerSession->getCustomerData();
+        }
+        return false;
     }
 }
