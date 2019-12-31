@@ -56,9 +56,4 @@ class CommentList extends \Magento\Framework\View\Element\Template
         }
         return $commentlist;
     }
-
-    public function getFormAction()
-    {
-        return 'blog/comment/save';
-    }
 }
