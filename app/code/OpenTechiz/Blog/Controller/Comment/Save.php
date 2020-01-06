@@ -74,7 +74,8 @@ class Save extends Action
             $model->addData([
                 "comment" => $postData['comment'],
                 "post_id" => $postData['post_id'],
-                "customer_id" => $postData['customer_id']
+                "customer_id" => $postData['customer_id'],
+                "is_active" => 1
             ]);
             $model->save();
             //  echo 'success';
@@ -87,7 +88,6 @@ class Save extends Action
             $email = $userInfo->getEmail();
             // send email to user
             $this->_sendEmail->approvalEmail($email, $name);
-            // echo 'success';
         } else {
             $jsonResultResponse->setData([
                 'result' => 'error',

@@ -3,19 +3,11 @@
     $form_url = $block->getFormAction();
     $customerID = $block->getLoggedinCustomerId(); 
     echo 'Customer ID : ' . $customerID;
-
-    $customerData = $block->getCustomerData();
-    if($customerData) {
-        echo 'Customer Id: ' . $customerData->getId() . '<br/>';
-        echo 'Customer Name: ' . $customerData->getFirstname() . ' '. $customerData->getLastname(). '<br/>';
-        echo 'Customer Email: ' . $customerData->getEmail() . '<br/>';
-        echo 'Customer Group Id: ' . $customerData->getGroupId() . '<br/>';
-    }
 ?>
 
 <form action="" method="post" id="comment-form"  >
     <input type="hidden" name="post_id" value="<?= $block->getPostId();?>">
-    <input type="hidden" name="customer_id" value="<?//= $block->getCustomerId();?>">
+    <input type="hidden" name="customer_id" value="<?= $customerID ?>">
     <input type="text" name='comment' required placeholder='Add Comment' >
     <br>
     <br>
