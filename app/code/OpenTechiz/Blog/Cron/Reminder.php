@@ -23,7 +23,7 @@ class Reminder
         $from = date('Y-m-d h:i:s', $from); // 1 days before
         $comments = $this->_commentCollectionFactory
                 ->create()
-                ->addFieldToFilter('is_active', 0)
+                ->addFieldToFilter('is_active', 2)
                 ->addFieldToFilter('created_at', ["lteq" => $from]);
         $commentCount = $comments->count();
         // get admins list

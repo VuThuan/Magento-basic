@@ -38,7 +38,7 @@ class SaveComment extends \Magento\Framework\View\Element\Template
         if ($this->_customerSession->isLoggedIn()) {
             return $this->_customerSession->getId();
         }
-        return 'Chua dang nhap';
+        return false;
     }
  
     public function getCustomerData() {

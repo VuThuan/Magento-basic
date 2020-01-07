@@ -15,14 +15,13 @@ define([
             if(dataForm.valid()) {
                 event.preventDefault();
                 var param = dataForm.serialize();
-                alert('sdadsdsa22222a');
+
                 $.ajax({
                     showLoader: true,
                     url: AjaxCommentPostUrl,
                     data: param,
                     type: "POST"
                 }).done(function (data) {
-                    console.log(data);
                     if (data.result == 'error') {
                         $('.note').html(data.message);
                         $('.note').css('color','red');
@@ -31,7 +30,6 @@ define([
                         $('.note').css('color','green');
                     }
 
-                    alert('sdadsa');
                     document.getElementById('comment-form').reset();
                     return true;
                 });
