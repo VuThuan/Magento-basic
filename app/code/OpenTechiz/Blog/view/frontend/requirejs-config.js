@@ -19,7 +19,7 @@
 var config = {
     "map" : {
         "*" : {
-            comment: 'OpenTechiz_Blog/js/comment'
+            loadComments: 'OpenTechiz_Blog/js/loadComments'
         }
     }
 };

@@ -75,7 +75,7 @@ class Save extends Action
                 "comment" => $postData['comment'],
                 "post_id" => $postData['post_id'],
                 "customer_id" => $postData['customer_id'],
-                "is_active" => 1
+                "is_active" => 2
             ]);
             $model->save();
             //  echo 'success';
