@@ -19,7 +19,9 @@
     {
         "*" : {
                 "OpenTechiz_Blog/js/commentajax":{
-                    "AjaxCommentPostUrl": "<?php  echo $form_url; ?>"
+                    "AjaxCommentPostUrl": "<?php  echo $form_url; ?>",
+                    "AjaxPostId": "<?php echo $block->getPostId() ?>",
+                    "AjaxCommentLoadUrl": "<?php echo $block->getAjaxUrl() ?>"
                     }
               }
     }

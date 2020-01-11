@@ -1,11 +1,14 @@
 define([
     "jquery",
-    "jquery/ui"
+    "jquery/ui",
+    "loadcomments"
 ], function($) {
     "use strict";
 
     function main(config, element) {
         var $element = $(element);
+        loadcomments.loadComments(config);
+
         var AjaxCommentPostUrl = config.AjaxCommentPostUrl;
 
         var dataForm = $('#comment-form');
@@ -25,13 +28,11 @@ define([
                     if (data.result == 'error') {
                         $('.note').html(data.message);
                         $('.note').css('color','red');
-                    } else {
-                        $('.note').html(data.message);
-                        $('.note').css('color','green');
-                    }
-
+                    } 
                     document.getElementById('comment-form').reset();
-                    return true;
+                    $('.note').html(data.message);
+                    $('.note').css('color','green');
+                    loadcomments.loadComments(config);
                 });
             }
         });
