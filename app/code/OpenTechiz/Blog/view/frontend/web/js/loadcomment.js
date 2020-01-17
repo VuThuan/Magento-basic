@@ -1,8 +1,8 @@
 define([
     'jquery',
     'mage/template',
-    'domReady',
-    'mage/translate'
+    'mage/translate',
+    'domReady'
 ], function($, mageTemplate) {
     'use strict';
     
