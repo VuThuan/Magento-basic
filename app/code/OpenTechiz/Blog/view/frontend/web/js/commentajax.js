@@ -2,12 +2,12 @@ define([
     "jquery",
     "jquery/ui",
     "loadcomment"
-], function($, loadcomment) {
+], function($,ui, loadcomment) {
     "use strict";
 
     function main(config, element) {
         var $element = $(element);
-        //loadcomment.loadComments(config);
+        loadcomment.loadComments(config);
 
         var AjaxCommentPostUrl = config.AjaxCommentPostUrl;
 
@@ -31,7 +31,7 @@ define([
                     document.getElementById('comment-form').reset();
                     $('.note').html(data.message);
                     $('.note').css('color','green');
-                    //loadcomment.loadComments(config);
+                    loadcomment.loadComments(config);
                 });
             }
         });

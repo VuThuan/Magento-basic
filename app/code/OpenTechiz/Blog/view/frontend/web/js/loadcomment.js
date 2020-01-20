@@ -1,7 +1,7 @@
 define([
     'jquery',
     'mage/template',
-    'mage/translate',
+    'mage/mage',
     'domReady'
 ], function($, mageTemplate) {
     'use strict';
@@ -17,7 +17,7 @@ define([
                     post_id: AjaxPostId
                 }
             }).done(function(data){
-                var template = mageTemplate('#blog-comment');
+                var template = mageTemplate('#blog-comment'), tmpl;
                 $('ul#data').empty();
                 if(!data) return false;
                 var comments = data.items;
