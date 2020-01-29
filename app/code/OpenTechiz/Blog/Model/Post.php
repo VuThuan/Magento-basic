@@ -42,7 +42,8 @@ class Post extends AbstractModel implements PostInterface,IdentityInterface
     
     public function checkUrlKey($url_key)
     {
-        return $this->_getResource()->checkUrlKey($url_key);
+        return true;
+        //return $this->_getResource()->checkUrlKey($url_key);
     }
 
     public function getAvailableStatuses()

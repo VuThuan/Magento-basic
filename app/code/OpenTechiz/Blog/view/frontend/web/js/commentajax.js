@@ -1,8 +1,9 @@
 define([
     "jquery",
     "jquery/ui",
-    "loadcomment"
-], function($,ui, loadcomment) {
+    "loadcomment",
+	"loadnotification"
+], function($,ui, loadcomment, notification) {
     "use strict";
 
     function main(config, element) {

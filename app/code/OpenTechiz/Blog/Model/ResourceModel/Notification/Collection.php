@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTechiz\Blog\Model\ResourceModel\Comment;
+namespace OpenTechiz\Blog\Model\ResourceModel\Notification;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 

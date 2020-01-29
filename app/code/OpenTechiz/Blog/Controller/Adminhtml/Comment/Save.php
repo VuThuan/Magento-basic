@@ -56,7 +56,12 @@ class Save extends Action
             $model->setPostId($data['post_id']);
             $model->setIsActive($data['is_active']);
             $model->setCustomerId($data['customer_id']);
-            //event
+
+            //event when admin update comment, on front-end posts page needs to display new comment
+            $this->_eventManager->dispatch(
+                'blog_comment_prepare_save',
+                ['comment' => $model, 'request' => $this->getRequest()]
+            );
 
             try {
                 $model->save();
