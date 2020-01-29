@@ -24,7 +24,7 @@ class Notification extends \Magento\Framework\View\Element\Template
 
     public function getSeenUrl()
 	{
-		return '/magento2/blog/notification/seen';
+		return '/blog/notification/seen';
 	}
 
     public function isLoggedIn()

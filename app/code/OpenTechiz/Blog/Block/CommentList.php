@@ -59,6 +59,6 @@ class CommentList extends \Magento\Framework\View\Element\Template
 
     public function getAjaxUrl()
     {
-        return '/magento2/blog/comment/load';
+        return '/blog/comment/load';
     }
 }

@@ -21,12 +21,17 @@ class SaveComment extends \Magento\Framework\View\Element\Template
     
     public function getFormAction()
     {
-        return '/magento2/blog/comment/save';
+        return '/blog/comment/save';
     }
     
+    public function getAjaxNotificationLoadUrl()
+	{
+		return '/blog/notification/load';
+	}
+
     public function getAjaxUrl()
     {
-        return '/magento2/blog/comment/load';
+        return '/blog/comment/load';
     }
     
     public function getPostId()
