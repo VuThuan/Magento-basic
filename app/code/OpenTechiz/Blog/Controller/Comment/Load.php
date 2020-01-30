@@ -43,7 +43,7 @@ class Load extends Action
         $comments = $this->_commentCollectionFactory
             ->create()
             ->addFieldToFilter('post_id', $post_id)
-            ->addFieldToFilter('is_active', 2)
+            ->addFieldToFilter('is_active', 1)
             ->addFieldToFilter('customer_id', $customer_id)
             ->addOrder(
                 CommentInterface::CREATED_AT,

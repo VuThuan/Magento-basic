@@ -47,6 +47,11 @@ class MassEnable extends \Magento\Backend\App\Action
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
 
+        $this->_eventManager->dispatch(
+            'blog_comment_mass_enable_prepare',
+            ['comments' => $collection]
+        );
+
         foreach ($collection as $item) {
             $item->setIsActive(true);
             $item->save();

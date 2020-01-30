@@ -19,7 +19,7 @@
     <?php 
     /** @var \OpenTechiz\Blog\Model\Comment $comment */
     foreach ($block->getComments() as $comment):
-        if ($comment->getIsActive() == 1 || $comment->getCustomerId() == $block->getCustomerId()) {
+        if ($comment->getIsActive() == 1) {
         ?>
 
         <li class="blog-post-list-item">

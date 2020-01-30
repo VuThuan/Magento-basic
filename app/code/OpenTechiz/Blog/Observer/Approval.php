@@ -40,7 +40,7 @@ class Approval implements ObserverInterface
         
         // if admin create new comment then return
         if(!$request->getParam('comment_id')) return;
-        $newStatus = $comment->isActive();
+        $newStatus = $comment->getIsActive();
         $oldStatus = $originalComment['is_active'];
 
         $customer_id = $originalComment['customer_id'];
@@ -53,9 +53,9 @@ class Approval implements ObserverInterface
 
         // if customer_id null then return
         if(!$customer_id) return;
-        if($oldStatus != 0) return;
+        if($oldStatus != 2) return;
         if($newStatus == null) return;
-        if($newStatus == 2) return;
+        if($newStatus == 0) return;
         if($oldStatus == $newStatus) return;
         // get post info
         $post = $this->_postFactory->create()->load($post_id);
@@ -63,7 +63,7 @@ class Approval implements ObserverInterface
         $noti = $this->_notiFactory->create();
         $content = "Your comment ID: $comment_id at Post: $postTitle has been approved by Admin";
         $noti->setContent($content);
-        $noti->setUserID($customer_id);
+        $noti->setCustomerID($customer_id);
         $noti->setCommentID($comment_id);
         $noti->setPostID($post_id);
         $noti->save();

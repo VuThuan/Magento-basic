@@ -4,4 +4,7 @@
 	<event name="blog_comment_prepare_save">
 		<observer name="Notification" instance="OpenTechiz\Blog\Observer\Approval" />
 	</event>
+	<event name="blog_comment_mass_enable_prepare">
+		<observer name="Notification MassEnable" instance="OpenTechiz\Blog\Observer\MassApproval" />
+	</event>
 </config>

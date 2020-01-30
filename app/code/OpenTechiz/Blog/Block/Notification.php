@@ -1,9 +1,6 @@
 <?php
 namespace OpenTechiz\Blog\Block;
 
-use OpenTechiz\Blog\Api\Data\PostInterface;
-use OpenTechiz\Blog\Model\ResourceModel\Post\Collection as PostCollection;
-
 class Notification extends \Magento\Framework\View\Element\Template
 {
 	protected $_request;
@@ -21,10 +18,10 @@ class Notification extends \Magento\Framework\View\Element\Template
 		$this->_customerSession = $customerSession;
 		parent::__construct($context, $data);
 	}
-
-    public function getSeenUrl()
+    
+    public function getAjaxNotificationLoadUrl()
 	{
-		return '/blog/notification/seen';
+		return '/magento2/blog/notification/load';
 	}
 
     public function isLoggedIn()
