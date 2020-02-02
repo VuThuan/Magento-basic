@@ -21,7 +21,7 @@ class Notification extends \Magento\Framework\View\Element\Template
     
     public function getAjaxNotificationLoadUrl()
 	{
-		return '/magento2/blog/notification/load';
+		return '/blog/notification/load';
 	}
 
     public function isLoggedIn()

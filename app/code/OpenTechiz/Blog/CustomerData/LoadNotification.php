@@ -53,7 +53,7 @@ class LoadNotification extends DataObject implements SectionSourceInterface
             ];
         }
         return [
-            'items' => count($items) ? $items : []
+            'items' =>  count($items) ? $items : []
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="header-wraper">
+        <referenceContainer name="content">
             <block class="OpenTechiz\Blog\Block\Notification" name="blog.notification" 
-                   template="OpenTechiz_Blog::notifications.phtml" cacheable="false" before="top.search" /> 
+                   template="OpenTechiz_Blog::notification.phtml" cacheable="false" before="top.search" /> 
         </referenceContainer>
     </body>
 </page>

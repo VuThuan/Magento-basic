@@ -1,0 +1,28 @@
+<script type="text/x-magento-init">
+{
+    "*": {
+        "OpenTechiz_Blog/js/commentajax": {
+            "AjaxCommentPostUrl": "<?php echo $block->getFormAction() ?>",
+            "AjaxCommentLoadUrl": "<?php echo $block->getAjaxUrl() ?>",
+            "AjaxPostId": "<?php echo $block->getPostID(); ?>",
+            "AjaxNotificationLoadUrl": "<?php echo $block->getAjaxNotificationLoadUrl(); ?>"
+        }
+    }
+}
+</script>
+
+<script id="blog-notification" type="text/x-magento-template">
+    <li class="dropdown-item">
+        <b><%- noti.content %></b>
+        <br><small>At <%- noti.created_at %></small>
+    </li>
+</script>
+
+<div class="customer-menu" id="expand">
+    <span class="counter qty action toggle"  data-mage-init='{"dropdown":{}}' data-toggle="dropdown" aria-haspopup="true">
+        <span class="title" id="noti-count" title="New notifcations"></span>
+    </span>
+    <ul class="dropdown" id="notification-content" style="overflow-y: scroll; height:100px; padding: 5px;">
+        <span style="text-align: center;"><h3>Notification</h3></span>
+    </ul>
+</div>

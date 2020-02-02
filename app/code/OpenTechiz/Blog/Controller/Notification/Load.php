@@ -35,25 +35,15 @@ class Load extends Action
         if(!$this->_customerSession->isLoggedIn()) return false;
         $postData = (array) $this->getRequest()->getPostValue();
         $page = 1;
-        $expand = 0;
+
         if(isset($postData['page']))
         {
             $page = $postData['page'];
         }
 
-        if(isset($postData['expand']))
-        {
-            $expand = $postData['expand'];
-        }
-
         $customer_id = $this->_customerSession->getCustomer()->getId();
 
         $jsonResultResponse = $this->_resultJsonFactory->create();
-        
-        $totalUnreadNotifications = $this->_notificationCollectionFactory
-            ->create()
-            ->addFieldToFilter('customer_id', $customer_id)
-            ->toArray();
 
         $notifications = $this->_notificationCollectionFactory
             ->create()
@@ -66,26 +56,11 @@ class Load extends Action
             );
 
         $totalRecords = $notifications->toArray()['totalRecords'];
-        $unreadNotification = count($totalUnreadNotifications['items']);
 
         if($totalRecords==0) return false;
 
-        if(ceil($totalRecords/5)<$page) return $jsonResultResponse->setData('end');;
+        if(ceil($totalRecords/5)<$page) return $jsonResultResponse->setData('end');
         
-        $returnData = $notifications->toArray();
-        $returnData['unreadRecords'] = $unreadNotification;
-        
-        $jsonResultResponse->setData($returnData);
-        foreach ($notifications as $notification) {
-            if(!$expand && $page == 1) break;
-            if(!$notification->isViewed())
-            {
-                $notification->isViewed(1);
-                $notification->save();
-                $returnData['expand'] = $expand;
-            }
-        }
-
         return $jsonResultResponse;
     }
 }

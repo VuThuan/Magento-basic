@@ -1,30 +1,24 @@
+<h3>NOTIFICATIONS BY CUSTOMER</h3>
+<div class="authentication-wrapper" data-block="authentication" data-role="notifications" data-bind="scope: 'loadNotifications'" style="margin-top: 0px !important; width:100px !important;">
+    <ul class="dropdown" id="notification-content" style="overflow-y: scroll; height:400px; padding: 5px;" data-bind="foreach: loadNotifications().items">
+        <li class="dropdown-item">
+            <span data-bind="text: content"></span>
+            <br><small data-bind="text: created_at"></small>
+        </li>
+    </ul>
+</div>
+
 <script type="text/x-magento-init">
-{
-    "*": {
-        "OpenTechiz_Blog/js/commentajax": {
-            "AjaxCommentPostUrl": "<?php echo $block->getFormAction() ?>",
-            "AjaxCommentLoadUrl": "<?php echo $block->getAjaxUrl() ?>",
-            "AjaxPostId": "<?php echo $block->getPostID(); ?>",
-            "AjaxNotificationLoadUrl": "<?php echo $block->getAjaxNotificationLoadUrl(); ?>"
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                    "components": {
+                        "loadNotifications": {
+                            "component": "OpenTechiz_Blog/js/view/loadnotifications"
+                        }
+                }
+            }
         }
     }
-}
 </script>
-<?php $helper = $this->helper('OpenTechiz\Blog\Helper\UserInfo'); ?>
-<?php if($helper->isLoggedIn()) { ?>
-    <script id="blog-notification" type="text/x-magento-template">
-        <li class="dropdown-item">
-            <b><%- noti.content %></b>
-            <br><small>At <%- noti.created_at %></small>
-        </li>
-    </script>
-    
-    <div class="customer-menu" id="expand">
-        <span class="counter qty action toggle"  data-mage-init='{"dropdown":{}}' data-toggle="dropdown" aria-haspopup="true">
-            <span class="title" id="noti-count" title="New notifcations"></span>
-        </span>
-        <ul class="dropdown" id="notification-content" style="overflow-y: scroll; height:400px; padding: 5px;">
-            <span style="text-align: center;"><h3>Notification</h3></span>
-        </ul>
-    </div>
-<?php } ?>
+

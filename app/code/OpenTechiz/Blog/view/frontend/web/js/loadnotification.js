@@ -7,24 +7,18 @@ define([
 	"use strict";
 	
 	return {
-        loadNotifications : function(config, page=1, expand = 0){
+        loadNotifications : function(config, page=1){
 			var AjaxNotificationLoadUrl = config.AjaxNotificationLoadUrl;
 			$.ajax({
 				url: AjaxNotificationLoadUrl,
 				type: 'POST',
 				data: {
-					page: page,
-					expand: expand
+					page: page
 				}
 			}).done(function(data){
 				console.log(data);
 				if(!data) return false;
-				if(data=="end")
-				{
-					$('li.dropdown-item').last().remove();
-					return;
-				}
-				$('#noti-count').html(data.unreadRecords);
+				
 				$('li.dropdown-item').last().remove();
 				var template = mageTemplate('#blog-notification');
 				//$('ul#notification-content').empty();
