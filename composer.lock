@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac4bfac897d5315de72c75c04c23c21f",
+    "content-hash": "24e27bc5382688f6095e406e345bf11f",
     "packages": [
         {
             "name": "braintree/braintree_php",
@@ -831,6 +831,7 @@
                 }
             ],
             "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function.",
+            "abandoned": true,
             "time": "2018-07-31T13:22:33+00:00"
         },
         {
@@ -881,6 +882,7 @@
                 "Guzzle",
                 "stream"
             ],
+            "abandoned": true,
             "time": "2014-10-12T19:18:40+00:00"
         },
         {
@@ -1110,6 +1112,92 @@
                 "framework"
             ],
             "time": "2019-11-26T15:09:40+00:00"
+        },
+        {
+            "name": "mageplaza/magento-2-blog-extension",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-blog.git",
+                "reference": "077a4f8d80ea76ba3c0179b70f3e4f2c14c64540"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-blog/zipball/077a4f8d80ea76ba3c0179b70f3e4f2c14c64540",
+                "reference": "077a4f8d80ea76ba3c0179b70f3e4f2c14c64540",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Blog\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Blog extension",
+            "keywords": [
+                "blog",
+                "magento 2",
+                "magento 2 blog",
+                "magento2",
+                "mageplaza"
+            ],
+            "time": "2019-12-30T07:59:36+00:00"
+        },
+        {
+            "name": "mageplaza/module-core",
+            "version": "1.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/module-core.git",
+                "reference": "aa99d5aa974ec9bf799bcc9a2137095baf882093"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/module-core/zipball/aa99d5aa974ec9bf799bcc9a2137095baf882093",
+                "reference": "aa99d5aa974ec9bf799bcc9a2137095baf882093",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Mageplaza Core for Magento 2",
+            "time": "2019-12-23T03:04:13+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3049,6 +3137,7 @@
                 "crypt",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-crypt",
             "time": "2016-02-03T23:46:30+00:00"
         },
         {
@@ -4696,6 +4785,7 @@
                 "text",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-text",
             "time": "2019-10-16T20:36:27+00:00"
         },
         {
