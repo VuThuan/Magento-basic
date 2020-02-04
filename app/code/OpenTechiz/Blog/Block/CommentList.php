@@ -2,9 +2,12 @@
 
 namespace OpenTechiz\Blog\Block;
 
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template;
+use OpenTechiz\Blog\Api\Data\CommentInterface;
+use OpenTechiz\Blog\Model\ResourceModel\Comment\Collection as CommentCollection;
 
-class CommentList extends \Magento\Framework\View\Element\Template
+class CommentList extends \Magento\Framework\View\Element\Template implements IdentityInterface
 {
     protected  $_commentFactory;
     
@@ -23,7 +26,8 @@ class CommentList extends \Magento\Framework\View\Element\Template
         \OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory $commentCollectionFactory,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Customer\Api\CustomerRepositoryInterfaceFactory $customerRepositoryFactory,
-        \Magento\Framework\Registry $registry
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\App\RequestInterface $request
     )
     {
         parent::__construct($context, $data);
@@ -32,6 +36,7 @@ class CommentList extends \Magento\Framework\View\Element\Template
         $this->_customerRepository = $customerRepositoryFactory;
         $this->_commentCollectionFactory = $commentCollectionFactory;
         $this->_registry = $registry;
+        $this->_request = $request;
     }
 
     public function getNameUser($id) {
@@ -43,22 +48,39 @@ class CommentList extends \Magento\Framework\View\Element\Template
         return $this->_customerSession->getCustomer()->getId();
     }
 
+    public function getPostID(){
+        return $this->_request->getParam('id', false);
+    }
+
     public function getComments()
     {
-        $comment = $this->_commentFactory->create();
-        $collection = $comment->getCollection();
-        $post_id = $this->_registry->registry('post_id');
-        $commentlist = [];
-        foreach ($collection as $comments) {
-            if ($comments->getPostId() == $post_id ) {
-                array_push($commentlist, $comments);
-            }
-        }
-        return $commentlist;
+        $post_id = $this->getPostId();
+        if(!$this->hasData("cmt")) {
+            $comments = $this->_commentCollectionFactory
+                ->create()
+                ->addFilter('post_id', $post_id)
+                ->addFieldToFilter('is_active', 1)
+                ->addOrder(
+                        CommentInterface::CREATED_AT,
+                        CommentCollection::SORT_ORDER_DESC
+                    );
+			$this->setData("cmt",$comments);
+		}
+		return $this->getData("cmt");
     }
 
     public function getAjaxUrl()
     {
-        return '/blog/comment/load';
+        return '/magento2/blog/comment/load';
+    }
+
+    public function getIdentities()
+    {
+        $identities = [];
+        foreach($this->getComments() as $comment){
+            array_merge($identities, $comment->getIdentities());
+        }
+        $identities[] = \OpenTechiz\Blog\Model\Comment::CACHE_POST_COMMENT_TAG.'_'.$this->getPostID();
+        return $identities;
     }
 }

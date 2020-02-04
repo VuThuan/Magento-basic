@@ -4,7 +4,7 @@
     <body>
         <referenceContainer name="content">
             <block class="OpenTechiz\Blog\Block\Notification" name="blog.notification" 
-                   template="OpenTechiz_Blog::notification.phtml" before="top.search" /> 
+                   template="OpenTechiz_Blog::notifications.phtml" before="top.search" /> 
         </referenceContainer>
     </body>
 </page>
