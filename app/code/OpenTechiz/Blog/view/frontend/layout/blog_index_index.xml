@@ -3,7 +3,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="OpenTechiz\Blog\Block\PostList" name="blog.postslist" template="OpenTechiz_Blog::list.phtml" cacheable="false" />
+            <block class="OpenTechiz\Blog\Block\PostList" name="blog.postslist" template="OpenTechiz_Blog::list.phtml" />
         </referenceContainer>
     </body>
 </page>
