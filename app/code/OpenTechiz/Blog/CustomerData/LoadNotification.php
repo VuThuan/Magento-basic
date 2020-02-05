@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTechiz\Blog\Customer;
+namespace OpenTechiz\Blog\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Framework\DataObject;
