@@ -74,7 +74,7 @@ class Save extends Action
             $model->addData([
                 "comment" => $postData['comment'],
                 "post_id" => $postData['post_id'],
-                "customer_id" => $postData['customer_id'],
+                "customer_id" => $this->_customerSession->getCustomer()->getId(),
                 "is_active" => 2
             ]);
             $model->save();

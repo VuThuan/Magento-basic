@@ -38,18 +38,4 @@ class SaveComment extends \Magento\Framework\View\Element\Template
     {
         return $this->_request->getParam('id', false);
     }
-
-    public function getLoggedinCustomerId() {
-        if ($this->_customerSession->isLoggedIn()) {
-            return $this->_customerSession->getId();
-        }
-        return false;
-    }
- 
-    public function getCustomerData() {
-        if ($this->_customerSession->isLoggedIn()) {
-            return $this->_customerSession->getCustomerData();
-        }
-        return false;
-    }
 }
