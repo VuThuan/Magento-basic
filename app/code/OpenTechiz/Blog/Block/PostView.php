@@ -50,7 +50,6 @@ class PostView extends Template
         $identities = $this->getPost()->getIdentities();
         $comments = $this->_commentCollectionFactory
             ->create()
-            ->addFieldToFilter('comment_id', $this->getID())
             ->addFieldToFilter('status_id', '1');
         foreach ($comments as $comment) {
             $identities = array_merge($identities,

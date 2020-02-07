@@ -51,8 +51,6 @@ class Approval implements ObserverInterface
             ->addFieldToFilter('comment_id', $comment_id);
         if($notiCheck->count()>0) return;
 
-        // if customer_id null then return
-        if(!$customer_id) return;
         if($oldStatus != 2) return;
         if($newStatus == null) return;
         if($newStatus == 0) return;

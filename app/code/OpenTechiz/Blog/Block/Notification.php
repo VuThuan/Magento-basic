@@ -18,11 +18,6 @@ class Notification extends \Magento\Framework\View\Element\Template
 		$this->_customerSession = $customerSession;
 		parent::__construct($context, $data);
 	}
-    
-    public function getAjaxNotificationLoadUrl()
-	{
-		return '/blog/notification/load';
-	}
 
     public function isLoggedIn()
 	{
