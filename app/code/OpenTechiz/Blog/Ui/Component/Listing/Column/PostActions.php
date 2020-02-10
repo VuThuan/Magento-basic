@@ -5,7 +5,9 @@ namespace OpenTechiz\Blog\Ui\Component\Listing\Column;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Framework\App\ObjectManager;
 use Magento\Ui\Component\Listing\Columns\Column;
+use Magento\Framework\Escaper;
 
 class PostActions extends Column
 {
@@ -18,6 +20,11 @@ class PostActions extends Column
 
     /** @var string */
     private $editUrl;
+
+    /**
+     * @var Escaper
+     */
+    private $escaper;
 
     /**
      * @param ContexInterface $context
@@ -56,17 +63,32 @@ class PostActions extends Column
                         'href' => $this->urlBuilder->getUrl($this->editUrl, ['post_id' => $item['post_id']]),
                         'label' => __('Edit')
                     ];
+                    $title = $this->getEscaper()->escapeHtml($item['title']);
                     $item[$name]['delete'] = [
                         'href' => $this->urlBuilder->getUrl(self::BLOG_URL_PATH_DELETE, ['post_id' => $item['post_id']]),
                         'label' => __('Delete'),
                         'confirm' => [
-                            'title' => __('Delete "${ $.$data.title }"'),
-                            'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
+                            'title' => __('Delete %1', $title),
+                            'message' => __('Are you sure you want to delete a %1 record?', $title)
                         ]
                     ];
                 }
             }
         }
         return $dataSource;
+    }
+
+    /**
+     * Get instance of escaper
+     *
+     * @return Escaper
+     * @deprecated 101.0.7
+     */
+    private function getEscaper()
+    {
+        if (!$this->escaper) {
+            $this->escaper = ObjectManager::getInstance()->get(Escaper::class);
+        }
+        return $this->escaper;
     }
 }
