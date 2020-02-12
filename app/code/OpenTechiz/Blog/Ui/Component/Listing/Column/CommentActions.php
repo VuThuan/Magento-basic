@@ -63,7 +63,7 @@ class CommentActions extends Column
                         'href' => $this->urlBuilder->getUrl($this->editUrl, ['comment_id' => $item['comment_id']]),
                         'label' => __('Edit')
                     ];
-                    $title = $this->getEscaper()->escapeHtml($item['title']);
+                    $title = $this->getEscaper()->escapeHtml($item['comment']);
                     $item[$name]['delete'] = [
                         'href' => $this->urlBuilder->getUrl(self::BLOG_URL_PATH_DELETE, ['comment_id' => $item['comment_id']]),
                         'label' => __('Delete'),

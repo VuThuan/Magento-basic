@@ -89,7 +89,7 @@ class Edit extends Action
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Comment Posts'));
         $resultPage->getConfig()->getTitle()
-            ->prepend($model->getId() ? $model->getTitle() : __('New Comment Posts'));
+            ->prepend($model->getCommentID() ? $model->getComment() : __('New Comment Posts'));
 
         return $resultPage;
     }

@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
 
 use Magento\Backend\App\Action;
@@ -13,24 +15,7 @@ use Magento\Framework\App\Request\DataPersistorInterface;
  */
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'OpenTechiz_Blog::post';   
-
-    /**
-     * @var PostDataProcessor
-     */
-    protected $dataProcessor;
-
-    /**
-     * @var DataPersistorInterface
-     */
-    protected $dataPersistor;
-
-    /**
-     * @var \OpenTechiz\Blog\Model\PostFactory
-     */
-    private $pageFactory;
-
-    protected $_backendSession;
+    const ADMIN_RESOURCE = 'OpenTechiz_Blog::post';
 
     /**
      * @param Action\Context $context
@@ -39,12 +24,9 @@ class Save extends Action
      */
     public function __construct(
         \OpenTechiz\Blog\Model\PostFactory $postFactory,
-        \Magento\Backend\Model\Session $backendSession,
         Action\Context $context
-    )
-    {
+    ) {
         $this->_postFactory = $postFactory;
-        $this->_backendSession = $backendSession;
         parent::__construct($context);
     }
 
@@ -62,10 +44,7 @@ class Save extends Action
         if ($data) {
             /** @var \OpenTechiz\Blog\Model\Post $model */
             $model = $this->_postFactory->create();
-            $id = $this->getRequest()->getParam('post_id');
-            if ($id) {
-                $model->load($id);
-            }
+
             $model->setTitle($data['title']);
             $model->setContent($data['content']);
             $model->setUrlKey($data['url_key']);
@@ -75,9 +54,8 @@ class Save extends Action
             try {
                 $model->save();
                 $this->messageManager->addSuccess(__('You saved this Post.'));
-                $this->_backendSession->setFormData(false);
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['post_id' => $model->getPostId(), '_current' => true]);
+                    return $resultRedirect->setPath('*/*/edit', ['post_id' => $model->getID(), '_current' => true]);
                 }
                 return $resultRedirect->setPath('*/*/');
             } catch (\Magento\Framework\Exception\LocalizedException $e) {

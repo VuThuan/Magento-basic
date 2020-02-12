@@ -1,0 +1,189 @@
+<?php
+
+namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\Comment;
+
+use PHPUnit\Framework\TestCase;
+
+class DeleteTest extends TestCase
+{
+    /** @var \OpenTechiz\Blog\Controller\Adminhtml\Comment\Delete */
+    protected $deleteController;
+
+    /** @var \Magento\Framework\TestFramework\Unit\Helper\ObjectManager */
+    protected $objectManager;
+
+    /** @var \Magento\Backend\App\Action\Context|\PHPUnit_Framework_MockObject_MockObject */
+    protected $contextMock;
+
+    /** @var \Magento\Backend\Model\View\Result\RedirectFactory|\PHPUnit_Framework_MockObject_MockObject */
+    protected $resultRedirectFactoryMock;
+
+    /** @var \Magento\Backend\Model\View\Result\Redirect|\PHPUnit_Framework_MockObject_MockObject */
+    protected $resultRedirectMock;
+
+    /** @var \Magento\Framework\Message\ManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    protected $messageManagerMock;
+
+    /** @var \Magento\Framework\App\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
+    protected $requestMock;
+
+    /** @var \Magento\Framework\ObjectManager\ObjectManager|\PHPUnit_Framework_MockObject_MockObject */
+    protected $objectManagerMock;
+
+    /** @var \OpenTechiz\Blog\Model\Comment|\PHPUnit_Framework_MockObject_MockObject $commentMock */
+    protected $commentMock;
+
+    /** @var string */
+    protected $title = 'This is the title of the comment.';
+
+    /** @var int */
+    protected $commentID = 1;
+
+    protected function setUp()
+    {
+        $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+
+        $this->messageManagerMock = $this->createMock(\Magento\Framework\Message\ManagerInterface::class);
+
+        $this->requestMock = $this->getMockForAbstractClass(
+            \Magento\Framework\App\RequestInterface::class,
+            [],
+            '',
+            false,
+            true,
+            true,
+            ['getParam']
+        );
+
+        $this->commentMock = $this->getMockBuilder(\OpenTechiz\Blog\Model\Comment::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['load', 'delete', 'getTitle'])
+            ->getMock();
+
+        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManager\ObjectManager::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['create'])
+            ->getMock();
+
+        $this->resultRedirectMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+            ->setMethods(['setPath'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->resultRedirectFactoryMock = $this->getMockBuilder(
+            \Magento\Backend\Model\View\Result\RedirectFactory::class
+        )->disableOriginalConstructor()
+            ->setMethods(['create'])
+            ->getMock();
+        $this->resultRedirectFactoryMock->expects($this->atLeastOnce())
+            ->method('create')
+            ->willReturn($this->resultRedirectMock);
+
+        $this->contextMock = $this->createMock(\Magento\Backend\App\Action\Context::class);
+
+        $this->contextMock->expects($this->any())->method('getRequest')->willReturn($this->requestMock);
+        $this->contextMock->expects($this->any())->method('getMessageManager')->willReturn($this->messageManagerMock);
+        $this->contextMock->expects($this->any())->method('getObjectManager')->willReturn($this->objectManagerMock);
+        $this->contextMock->expects($this->any())
+            ->method('getResultRedirectFactory')
+            ->willReturn($this->resultRedirectFactoryMock);
+
+        $this->deleteController = $this->objectManager->getObject(
+            \OpenTechiz\Blog\Controller\Adminhtml\Comment\Delete::class,
+            [
+                'context' => $this->contextMock,
+            ]
+        );
+    }
+
+    public function testDeleteAction()
+    {
+        $this->requestMock->expects($this->once())
+            ->method('getParam')
+            ->willReturn($this->commentID);
+
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with(\OpenTechiz\Blog\Model\Comment::class)
+            ->willReturn($this->commentMock);
+
+        $this->commentMock->expects($this->once())
+            ->method('load')
+            ->with($this->commentID);
+        $this->commentMock->expects($this->once())
+            ->method('getTitle')
+            ->willReturn($this->title);
+        $this->commentMock->expects($this->once())
+            ->method('delete');
+
+        $this->messageManagerMock->expects($this->once())
+            ->method('addSuccessMessage')
+            ->with(__('The Comment has been deleted.'));
+        $this->messageManagerMock->expects($this->never())
+            ->method('addErrorMessage');
+
+        $this->resultRedirectMock->expects($this->once())
+            ->method('setPath')
+            ->with('*/*/')
+            ->willReturnSelf();
+
+        $this->assertSame($this->resultRedirectMock, $this->deleteController->execute());
+    }
+
+    public function testDeleteActionNoId()
+    {
+        $this->requestMock->expects($this->once())
+            ->method('getParam')
+            ->willReturn(null);
+
+        $this->messageManagerMock->expects($this->once())
+            ->method('addErrorMessage')
+            ->with(__('We can\'t find a comment to delete.'));
+        $this->messageManagerMock->expects($this->never())
+            ->method('addSuccessMessage');
+
+        $this->resultRedirectMock->expects($this->once())
+            ->method('setPath')
+            ->with('*/*/')
+            ->willReturnSelf();
+
+        $this->assertSame($this->resultRedirectMock, $this->deleteController->execute());
+    }
+
+    public function testDeleteActionThrowsException()
+    {
+        $errorMsg = 'Can\'t delete the comment';
+
+        $this->requestMock->expects($this->once())
+            ->method('getParam')
+            ->willReturn($this->commentID);
+
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with(\OpenTechiz\Blog\Model\Comment::class)
+            ->willReturn($this->commentMock);
+
+        $this->commentMock->expects($this->once())
+            ->method('load')
+            ->with($this->commentID);
+        $this->commentMock->expects($this->once())
+            ->method('getTitle')
+            ->willReturn($this->title);
+        $this->commentMock->expects($this->once())
+            ->method('delete')
+            ->willThrowException(new \Exception(__($errorMsg)));
+
+        $this->messageManagerMock->expects($this->once())
+            ->method('addErrorMessage')
+            ->with($errorMsg);
+        $this->messageManagerMock->expects($this->never())
+            ->method('addSuccessMessage');
+
+        $this->resultRedirectMock->expects($this->once())
+            ->method('setPath')
+            ->with('*/*/edit', ['comment_id' => $this->commentID])
+            ->willReturnSelf();
+
+        $this->assertSame($this->resultRedirectMock, $this->deleteController->execute());
+    }
+}

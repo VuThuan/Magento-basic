@@ -53,7 +53,7 @@ class CommentActionsTest extends TestCase
                 'items' => [
                     [
                         'comment_id' => $commentID,
-                        'title' => $title
+                        'comment' => $title
                     ]
                 ]
             ]
@@ -62,7 +62,7 @@ class CommentActionsTest extends TestCase
         $expectedItems = [
             [
                 'comment_id' => $commentID,
-                'title' => $title,
+                'comment' => $title,
                 $name => [
                     'edit' => [
                         'href' => 'test/url/edit',

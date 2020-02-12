@@ -45,7 +45,7 @@ class Delete extends \Magento\Backend\App\Action
         }
         
         // display error message
-        $this->messageManager->addErrorMessage(__('We can\'t find a post to delete.'));
+        $this->messageManager->addErrorMessage(__('We can\'t find a comment to delete.'));
         
         // go to grid
         return $resultRedirect->setPath('*/*/');
