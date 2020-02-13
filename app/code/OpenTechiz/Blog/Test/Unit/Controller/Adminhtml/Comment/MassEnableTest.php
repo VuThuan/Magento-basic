@@ -81,9 +81,9 @@ class MassEnableTest extends AbstractMassActionTest
             ->method('getIterator')
             ->willReturn(new \ArrayIterator($collection));
 
-        // $this->messageManagerMock->expects($this->once())
-        //     ->method('addSuccessMessage')
-        //     ->with(__('A total of %1 record(s) have been enabled.', $enabledPostsCount));
+        $this->messageManagerMock->expects($this->once())
+            ->method('addSuccessMessage')
+            ->with(__('A total of %1 record(s) have been enabled.', $enabledPostsCount));
 
         $this->resultRedirectMock->expects($this->once())
             ->method('setPath')

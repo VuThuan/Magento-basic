@@ -72,6 +72,7 @@ class EditTest extends TestCase
 
         $this->commentMock = $this->getMockBuilder(\OpenTechiz\Blog\Model\Comment::class)
             ->disableOriginalConstructor()
+            ->setMethods(['getTitle', 'create', 'getId', 'load'])
             ->getMock();
 
         $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManager\ObjectManager::class)
@@ -223,8 +224,8 @@ class EditTest extends TestCase
     public function editActionData()
     {
         return [
-            [null, 'Edit Comment Posts', 'New Comment Posts'],
-            [4, 'Edit Comment Posts', 'New Comment Posts']
+            [null, 'New Comment Posts', 'New Comment Posts'],
+            [4, 'Edit Comment Posts', 'Edit Comment Posts']
         ];
     }
 }

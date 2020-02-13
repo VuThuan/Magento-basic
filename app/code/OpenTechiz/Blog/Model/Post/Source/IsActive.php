@@ -16,8 +16,8 @@ class IsActive implements OptionSourceInterface
 
     public function toOptionArray()
     {
-        $option[] = ['label' => '', 'value' => ''];
         $availableOptions = $this->post->getAvailableStatuses();
+        $option = [];
         foreach($availableOptions as $key => $value){
             $option[] = [
                 'label' => $value,

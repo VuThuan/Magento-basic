@@ -7,12 +7,12 @@ use OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory;
 class Status extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
     /**
-     * @var \WDT\Faq\Model\ResourceModel\Post\CollectionFactory
+     * @var \OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory
      */
     protected $_collectionFactory;
 
     /**
-     * @param \WDT\Faq\Model\ResourceModel\Post\CollectionFactory
+     * @param \OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory
      */
     public function __construct(CollectionFactory $collectionFactory)
     {
@@ -21,22 +21,15 @@ class Status extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 
     public function getAllOptions()
     {
-        if (empty($this->_options)) {
-            $options = [];
-            $collection = $this->_collectionFactory->create();
+        $options = [];
+        $collection = $this->_collectionFactory->create();
 
-            foreach ($collection as $post) {
-                $options[] = [
-                    'label' => $post->getTitle(),
-                    'value' => $post->getId()
-                ];
-            }
-            $this->_options = $options;
+        foreach ($collection as $post) {
+            $options[] = [
+                'label' => $post->getTitle(),
+                'value' => $post->getId()
+            ];
         }
-        return $this->_options;
-        // return [
-        //     '1' => 'dsadas',
-        //     '2' => 'sadsads'
-        // ];
+        return $options;
     }
 }
