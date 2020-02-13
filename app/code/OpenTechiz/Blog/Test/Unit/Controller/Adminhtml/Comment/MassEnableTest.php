@@ -24,7 +24,9 @@ class MassEnableTest extends AbstractMassActionTest
      */
     protected $commentCollectionMock;
 
-    /** @var \Magento\Framework\Event\ManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /**
+     * @var \Magento\Framework\Event\ManagerInterface|\PHPUnit_Framework_MockObject_MockObject 
+     */
     protected $eventManagerMock;
 
     protected function setUp()
@@ -84,6 +86,7 @@ class MassEnableTest extends AbstractMassActionTest
         $this->messageManagerMock->expects($this->once())
             ->method('addSuccessMessage')
             ->with(__('A total of %1 record(s) have been enabled.', $enabledPostsCount));
+        $this->messageManagerMock->expects($this->never())->method('addErrorMessage');
 
         $this->resultRedirectMock->expects($this->once())
             ->method('setPath')
