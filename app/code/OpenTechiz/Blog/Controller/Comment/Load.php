@@ -37,7 +37,7 @@ class Load extends Action
         $postData = (array) $this->getRequest()->getPostValue();
 
         $post_id = $postData['post_id'];
-        $customer_id = $this->_customerSession->getCustomer()->getId();
+        $customer_id = $this->_customerSession->getCustomerId();
         $jsonResultResponse = $this->_resultJsonFactory->create();
 
         $comments = $this->_commentCollectionFactory
