@@ -21,7 +21,7 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
     protected $objectManagerHelper;
 
     /**
-     * @var Comment\Source\IsActive
+     * @var Page\Source\IsActive
      */
     protected $object;
 
@@ -31,7 +31,6 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManager($this);
-        
         $this->blogCommentMock = $this->getMockBuilder(\OpenTechiz\Blog\Model\Comment::class)
             ->disableOriginalConstructor()
             ->setMethods(['getAvailableStatuses'])
@@ -72,8 +71,12 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
     {
         return [
             [
+                [],
+                [],
+            ],
+            [
                 ['testStatus' => 'testValue'],
-                [['label' => 'testValue', 'value' => 'testStatus']]
+                [['label' => 'testValue', 'value' => 'testStatus']],
             ],
         ];
     }

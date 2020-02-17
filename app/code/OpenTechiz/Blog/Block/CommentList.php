@@ -68,11 +68,6 @@ class CommentList extends \Magento\Framework\View\Element\Template implements Id
 
     public function getIdentities()
     {
-        $identities = [];
-        foreach($this->getComments() as $comment){
-            array_merge($identities, $comment->getIdentities());
-        }
-        $identities[] = \OpenTechiz\Blog\Model\Comment::CACHE_POST_COMMENT_TAG.'_'.$this->getPostID();
-        return $identities;
+        return [\OpenTechiz\Blog\Model\Comment::CACHE_POST_COMMENT_TAG.'_'.$this->getPostID()];
     }
 }

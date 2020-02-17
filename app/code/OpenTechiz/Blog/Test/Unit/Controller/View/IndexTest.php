@@ -58,11 +58,13 @@ class IndexTest extends TestCase
                 'id' => $postID
             ]);
 
-        $pageMock = $this->getMockBuilder(\OpenTechiz\Blog\Model\Post::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $pageMock = $this->createMock(\OpenTechiz\Blog\Model\Post::class);
 
-        $this->registryMock->expects($this->once())->method('register')->with('post_id', $postID);
+        $this->registryMock->expects($this->once())
+            ->method('register')
+            ->will($this->returnValueMap([
+                ['post_id', $postID]
+            ]));
         $this->postFactoryMock->expects($this->once())
             ->method('create')
             ->willReturn($pageMock);
