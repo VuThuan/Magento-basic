@@ -2,36 +2,96 @@
 
 namespace OpenTechiz\Blog\Controller\Comment;
 
-use \Magento\Framework\App\Action\Action;
+use Exception;
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Json;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\DataObject;
+use Magento\Framework\Mail\Template\TransportBuilder;
+use Magento\Framework\Translate\Inline\StateInterface;
+use OpenTechiz\Blog\Helper\SendEmail;
+use OpenTechiz\Blog\Model\Comment;
+use OpenTechiz\Blog\Model\CommentFactory;
 
+/**
+ * Class Save
+ * @package OpenTechiz\Blog\Controller\Comment
+ */
 class Save extends Action
 {
+    /**
+     * @var CommentFactory
+     */
     protected $_commentFactory;
 
+    /**
+     * @var JsonFactory
+     */
     protected $_resultJsonFactory;
 
+    /**
+     * @var StateInterface
+     */
     protected $_inlineTranslation;
 
+    /**
+     * @var TransportBuilder
+     */
     protected $_transportBuilder;
 
+    /**
+     * @var ScopeConfigInterface
+     */
     protected $_scopeConfig;
 
+    /**
+     * @var SendEmail
+     */
     protected $_sendEmail;
 
+    /**
+     * @var Session
+     */
     protected $_customerSession;
 
+    /**
+     * @var ResultFactory
+     */
     protected $resultRedirect;
 
-    function __construct(
-        \OpenTechiz\Blog\Model\CommentFactory $commentFactory,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
-        \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Customer\Model\Session $customerSession,
-        \OpenTechiz\Blog\Helper\SendEmail $sendEmail,
-        \Magento\Framework\Controller\ResultFactory $result,
-        \Magento\Framework\App\Action\Context $context
+    /**
+     * @var ResultFactory
+     */
+    private $_resultFactory;
+
+    /**
+     * Save constructor.
+     * @param CommentFactory $commentFactory
+     * @param JsonFactory $resultJsonFactory
+     * @param StateInterface $inlineTranslation
+     * @param TransportBuilder $transportBuilder
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Session $customerSession
+     * @param SendEmail $sendEmail
+     * @param ResultFactory $result
+     * @param Context $context
+     */
+    public function __construct(
+        CommentFactory $commentFactory,
+        JsonFactory $resultJsonFactory,
+        StateInterface $inlineTranslation,
+        TransportBuilder $transportBuilder,
+        ScopeConfigInterface $scopeConfig,
+        Session $customerSession,
+        SendEmail $sendEmail,
+        ResultFactory $result,
+        Context $context
     ) {
         $this->_commentFactory = $commentFactory;
         $this->_resultFactory = $context->getResultFactory();
@@ -45,6 +105,10 @@ class Save extends Action
         parent::__construct($context);
     }
 
+    /**
+     * @return ResponseInterface|Json|ResultInterface
+     * @throws Exception
+     */
     public function execute()
     {
         $error = false;
@@ -57,7 +121,7 @@ class Save extends Action
         }
 
         $this->_inlineTranslation->suspend();
-        $postObject = new \Magento\Framework\DataObject();
+        $postObject = new DataObject();
         $postObject->setData($postData);
 
         if (!$this->_customerSession->isLoggedIn()) {
@@ -69,7 +133,7 @@ class Save extends Action
 
         if (!$error) {
             // save data to database
-            /** @var \OpenTechiz\Blog\Model\Comment $model */
+            /** @var Comment $model */
             $model = $this->_commentFactory->create();
             $model->addData([
                 "comment" => $postData['comment'],
@@ -77,6 +141,12 @@ class Save extends Action
                 "customer_id" => $this->_customerSession->getCustomer()->getId(),
                 "is_active" => 2
             ]);
+
+            $this->_eventManager->dispatch(
+                'blog_comment_prepare_save',
+                ['comment' => $model, 'request' => $this->getRequest()]
+            );
+
             $model->save();
             //  echo 'success';
             $jsonResultResponse->setData([

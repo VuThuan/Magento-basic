@@ -5,8 +5,10 @@
  */
 namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 use OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory;
 
@@ -40,8 +42,8 @@ class MassDelete extends \Magento\Backend\App\Action
     /**
      * Execute action
      *
-     * @return \Magento\Backend\Model\View\Result\Redirect
-     * @throws \Magento\Framework\Exception\LocalizedException|\Exception
+     * @return Redirect
+     * @throws LocalizedException|\Exception
      */
     public function execute()
     {
@@ -54,9 +56,9 @@ class MassDelete extends \Magento\Backend\App\Action
 
         $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been deleted.', $collectionSize));
 
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        
+
         return $resultRedirect->setPath('*/*/');
     }
 }

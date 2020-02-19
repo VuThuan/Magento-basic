@@ -2,22 +2,25 @@
 
 namespace OpenTechiz\Blog\Cron;
 
-class Reminder 
+use Magento\User\Model\ResourceModel\User\CollectionFactory;
+use OpenTechiz\Blog\Helper\SendEmail;
+
+class Reminder
 {
     protected $_sendEmail;
     protected $_commentCollectionFactory;
     protected $_userCollection;
     public function __construct(
         \OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory $commentCollectionFactory,
-        \Magento\User\Model\ResourceModel\User\CollectionFactory $userCollection,
-        \OpenTechiz\Blog\Helper\SendEmail $sendEmail
-    ) 
-    {
+        CollectionFactory $userCollection,
+        SendEmail $sendEmail
+    ) {
         $this->_commentCollectionFactory = $commentCollectionFactory;
         $this->_userCollection = $userCollection;
         $this->_sendEmail = $sendEmail;
     }
-    public function execute() {
+    public function execute()
+    {
         $to = date("Y-m-d h:i:s"); // current date
         $from = strtotime('-1 day', strtotime($to));
         $from = date('Y-m-d h:i:s', $from); // 1 days before
@@ -28,8 +31,7 @@ class Reminder
         $commentCount = $comments->count();
         // get admins list
         $admins = $this->_userCollection->create();
-        if($commentCount>0 && $admins->count()>0)
-        {
+        if ($commentCount>0 && $admins->count()>0) {
             foreach ($admins as $admin) {
                 $email = $admin->getEmail();
                 $name = $admin->getUserName();
