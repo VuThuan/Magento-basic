@@ -71,10 +71,6 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
     {
         return [
             [
-                [],
-                [],
-            ],
-            [
                 ['testStatus' => 'testValue'],
                 [['label' => 'testValue', 'value' => 'testStatus']],
             ],

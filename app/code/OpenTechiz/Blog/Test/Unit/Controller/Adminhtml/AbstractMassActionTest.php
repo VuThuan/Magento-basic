@@ -2,51 +2,57 @@
 
 namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml;
 
-use PHPUnit\Framework\TestCase;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\Ui\Component\MassAction\Filter;
+use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 abstract class AbstractMassActionTest extends TestCase
 {
     /**
-     * @var \Magento\Framework\TestFramework\Unit\Helper\ObjectManager
+     * @var ObjectManager
      */
     protected $objectManager;
 
     /**
-     * @var \Magento\Backend\App\Action\Context|\PHPUnit_Framework_MockObject_MockObject
+     * @var Context|PHPUnit_Framework_MockObject_MockObject
      */
     protected $contextMock;
 
     /**
-     * @var \Magento\Framework\Controller\ResultFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var ResultFactory|PHPUnit_Framework_MockObject_MockObject
      */
     protected $resultFactoryMock;
 
     /**
-     * @var \Magento\Backend\Model\View\Result\Redirect|\PHPUnit_Framework_MockObject_MockObject
+     * @var Redirect|PHPUnit_Framework_MockObject_MockObject
      */
     protected $resultRedirectMock;
 
     /**
-     * @var \Magento\Framework\Message\ManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ManagerInterface|PHPUnit_Framework_MockObject_MockObject
      */
     protected $messageManagerMock;
 
     /**
-     * @var \Magento\Ui\Component\MassAction\Filter|\PHPUnit_Framework_MockObject_MockObject
+     * @var Filter|PHPUnit_Framework_MockObject_MockObject
      */
     protected $filterMock;
 
     protected function setUp()
     {
-        $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        $this->objectManager = new ObjectManager($this);
 
-        $this->messageManagerMock = $this->createMock(\Magento\Framework\Message\ManagerInterface::class);
+        $this->messageManagerMock = $this->createMock(ManagerInterface::class);
 
-        $this->resultFactoryMock = $this->getMockBuilder(\Magento\Framework\Controller\ResultFactory::class)
+        $this->resultFactoryMock = $this->getMockBuilder(ResultFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->resultRedirectMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $this->resultRedirectMock = $this->getMockBuilder(Redirect::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->resultFactoryMock->expects($this->any())
@@ -54,9 +60,9 @@ abstract class AbstractMassActionTest extends TestCase
             ->with(ResultFactory::TYPE_REDIRECT, [])
             ->willReturn($this->resultRedirectMock);
 
-        $this->contextMock = $this->createMock(\Magento\Backend\App\Action\Context::class);
+        $this->contextMock = $this->createMock(Context::class);
 
-        $this->filterMock = $this->getMockBuilder(\Magento\Ui\Component\MassAction\Filter::class)
+        $this->filterMock = $this->getMockBuilder(Filter::class)
             ->disableOriginalConstructor()
             ->getMock();
 

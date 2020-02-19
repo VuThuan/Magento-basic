@@ -5,22 +5,27 @@
  */
 namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\Post;
 
-use \OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
+use ArrayIterator;
+use OpenTechiz\Blog\Controller\Adminhtml\Post\MassDisable;
+use OpenTechiz\Blog\Model\ResourceModel\Post\Collection;
+use OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory;
+use OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
+use PHPUnit_Framework_MockObject_MockObject;
 
 class MassDisableTest extends AbstractMassActionTest
 {
     /**
-     * @var \OpenTechiz\Blog\Controller\Adminhtml\Post\MassDisable
+     * @var MassDisable
      */
     protected $massDisableController;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var CollectionFactory|PHPUnit_Framework_MockObject_MockObject
      */
     protected $collectionFactoryMock;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Post\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @var Collection|PHPUnit_Framework_MockObject_MockObject
      */
     protected $pageCollectionMock;
 
@@ -29,14 +34,14 @@ class MassDisableTest extends AbstractMassActionTest
         parent::setUp();
 
         $this->collectionFactoryMock = $this->createPartialMock(
-            \OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory::class,
+            CollectionFactory::class,
             ['create']
         );
 
-        $this->pageCollectionMock = $this->createMock(\OpenTechiz\Blog\Model\ResourceModel\Post\Collection::class);
+        $this->pageCollectionMock = $this->createMock(Collection::class);
 
         $this->massDisableController = $this->objectManager->getObject(
-            \OpenTechiz\Blog\Controller\Adminhtml\Post\MassDisable::class,
+            MassDisable::class,
             [
                 'context' => $this->contextMock,
                 'filter' => $this->filterMock,
@@ -64,7 +69,7 @@ class MassDisableTest extends AbstractMassActionTest
         $this->pageCollectionMock->expects($this->once())->method('getSize')->willReturn($disabledPagesCount);
         $this->pageCollectionMock->expects($this->once())
             ->method('getIterator')
-            ->willReturn(new \ArrayIterator($collection));
+            ->willReturn(new ArrayIterator($collection));
 
         $this->messageManagerMock->expects($this->once())
             ->method('addSuccess')
@@ -82,12 +87,12 @@ class MassDisableTest extends AbstractMassActionTest
     /**
      * Create Cms Post Collection Mock
      *
-     * @return \\OpenTechiz\Blog\Model\ResourceModel\Post\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @return \OpenTechiz\Blog\Model\ResourceModel\Post\Collection|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getPageMock()
     {
         $pageMock = $this->createPartialMock(
-            \OpenTechiz\Blog\Model\ResourceModel\Post\Collection::class,
+            Collection::class,
             ['setIsActive', 'save']
         );
         $pageMock->expects($this->once())->method('setIsActive')->with(false)->willReturn(true);

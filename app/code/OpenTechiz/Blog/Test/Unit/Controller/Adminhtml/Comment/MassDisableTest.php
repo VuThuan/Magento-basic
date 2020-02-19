@@ -5,22 +5,27 @@
  */
 namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\Comment;
 
-use \OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
+use ArrayIterator;
+use OpenTechiz\Blog\Controller\Adminhtml\Comment\MassDisable;
+use OpenTechiz\Blog\Model\ResourceModel\Comment\Collection;
+use OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory;
+use OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
+use PHPUnit_Framework_MockObject_MockObject;
 
 class MassDisableTest extends AbstractMassActionTest
 {
     /**
-     * @var \OpenTechiz\Blog\Controller\Adminhtml\Comment\MassDisable
+     * @var MassDisable
      */
     protected $massDisableController;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var CollectionFactory|PHPUnit_Framework_MockObject_MockObject
      */
     protected $collectionFactoryMock;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Comment\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @var Collection|PHPUnit_Framework_MockObject_MockObject
      */
     protected $commentCollectionMock;
 
@@ -29,14 +34,14 @@ class MassDisableTest extends AbstractMassActionTest
         parent::setUp();
 
         $this->collectionFactoryMock = $this->createPartialMock(
-            \OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory::class,
+            CollectionFactory::class,
             ['create']
         );
 
-        $this->commentCollectionMock = $this->createMock(\OpenTechiz\Blog\Model\ResourceModel\Comment\Collection::class);
+        $this->commentCollectionMock = $this->createMock(Collection::class);
 
         $this->massDisableController = $this->objectManager->getObject(
-            \OpenTechiz\Blog\Controller\Adminhtml\Comment\MassDisable::class,
+            MassDisable::class,
             [
                 'context' => $this->contextMock,
                 'filter' => $this->filterMock,
@@ -64,7 +69,7 @@ class MassDisableTest extends AbstractMassActionTest
         $this->commentCollectionMock->expects($this->once())->method('getSize')->willReturn($disabledPagesCount);
         $this->commentCollectionMock->expects($this->once())
             ->method('getIterator')
-            ->willReturn(new \ArrayIterator($collection));
+            ->willReturn(new ArrayIterator($collection));
 
         $this->messageManagerMock->expects($this->once())
             ->method('addSuccess')
@@ -82,12 +87,12 @@ class MassDisableTest extends AbstractMassActionTest
     /**
      * Create Cms Post Collection Mock
      *
-     * @return \\OpenTechiz\Blog\Model\ResourceModel\Comment\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @return \OpenTechiz\Blog\Model\ResourceModel\Comment\Collection|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getCommentMock()
     {
         $commentMock = $this->createPartialMock(
-            \OpenTechiz\Blog\Model\ResourceModel\Comment\Collection::class,
+            Collection::class,
             ['setIsActive', 'save']
         );
         $commentMock->expects($this->once())->method('setIsActive')->with(false)->willReturn(true);

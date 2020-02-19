@@ -2,7 +2,12 @@
 
 namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\Comment;
 
+use ArrayIterator;
+use OpenTechiz\Blog\Controller\Adminhtml\Comment\MassDelete;
+use OpenTechiz\Blog\Model\ResourceModel\Comment\Collection;
+use OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory;
 use OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Test for OpenTechiz\Blog\Controller\Adminhtml\Comment\MassDelete Class
@@ -10,17 +15,17 @@ use OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
 class MassDeleteTest extends AbstractMassActionTest
 {
     /**
-     * @var \OpenTechiz\Blog\Controller\Adminhtml\Comment\MassDelete
+     * @var MassDelete
      */
     protected $massDeleteController;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var CollectionFactory|PHPUnit_Framework_MockObject_MockObject
      */
     protected $collectionFactoryMock;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Comment\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @var Collection|PHPUnit_Framework_MockObject_MockObject
      */
     protected $commentCollectionMock;
 
@@ -29,15 +34,15 @@ class MassDeleteTest extends AbstractMassActionTest
         parent::setUp();
 
         $this->collectionFactoryMock = $this->createPartialMock(
-            \OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory::class,
+            CollectionFactory::class,
             ['create']
         );
 
         $this->commentCollectionMock =
-            $this->createMock(\OpenTechiz\Blog\Model\ResourceModel\Comment\Collection::class);
+            $this->createMock(Collection::class);
 
         $this->massDeleteController = $this->objectManager->getObject(
-            \OpenTechiz\Blog\Controller\Adminhtml\Comment\MassDelete::class,
+            MassDelete::class,
             [
                 'context' => $this->contextMock,
                 'filter' => $this->filterMock,
@@ -65,7 +70,7 @@ class MassDeleteTest extends AbstractMassActionTest
         $this->commentCollectionMock->expects($this->once())->method('getSize')->willReturn($deletedCommentsCount);
         $this->commentCollectionMock->expects($this->once())
             ->method('getIterator')
-            ->willReturn(new \ArrayIterator($collection));
+            ->willReturn(new ArrayIterator($collection));
 
         $this->messageManagerMock->expects($this->once())
             ->method('addSuccessMessage')
@@ -83,11 +88,11 @@ class MassDeleteTest extends AbstractMassActionTest
     /**
      * Create Blog Post Collection Mock
      *
-     * @return \OpenTechiz\Blog\Model\ResourceModel\Comment\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @return Collection|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getCommentMock()
     {
-        $commentMock = $this->createPartialMock(\OpenTechiz\Blog\Model\ResourceModel\Comment\Collection::class, ['delete']);
+        $commentMock = $this->createPartialMock(Collection::class, ['delete']);
         $commentMock->expects($this->once())->method('delete')->willReturn(true);
 
         return $commentMock;

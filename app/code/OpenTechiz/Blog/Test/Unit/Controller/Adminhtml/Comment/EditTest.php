@@ -2,7 +2,22 @@
 
 namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\Comment;
 
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Backend\Model\View\Result\RedirectFactory;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\ObjectManager\ObjectManager;
+use Magento\Framework\Phrase;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Page\Config;
+use Magento\Framework\View\Page\Title;
+use Magento\Framework\View\Result\PageFactory;
+use OpenTechiz\Blog\Controller\Adminhtml\Comment\Edit;
+use OpenTechiz\Blog\Model\Comment;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Test for OpenTechiz\Blog\Controller\Adminhtml\Comment\Edit Class
@@ -10,7 +25,7 @@ use PHPUnit\Framework\TestCase;
 class EditTest extends TestCase
 {
     /**
-     * @var \OpenTechiz\Blog\Controller\Adminhtml\Comment\Edit
+     * @var Edit
      */
     protected $editController;
 
@@ -20,82 +35,82 @@ class EditTest extends TestCase
     protected $objectManager;
 
     /**
-     * @var \Magento\Backend\App\Action\Context|\PHPUnit_Framework_MockObject_MockObject
+     * @var Context|PHPUnit_Framework_MockObject_MockObject
      */
     protected $contextMock;
 
     /**
-     * @var \Magento\Backend\Model\View\Result\RedirectFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var RedirectFactory|PHPUnit_Framework_MockObject_MockObject
      */
     protected $resultRedirectFactoryMock;
 
     /**
-     * @var \Magento\Backend\Model\View\Result\Redirect|\PHPUnit_Framework_MockObject_MockObject
+     * @var Redirect|PHPUnit_Framework_MockObject_MockObject
      */
     protected $resultRedirectMock;
 
     /**
-     * @var \Magento\Framework\Message\ManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ManagerInterface|PHPUnit_Framework_MockObject_MockObject
      */
     protected $messageManagerMock;
 
     /**
-     * @var \Magento\Framework\App\RequestInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var RequestInterface|PHPUnit_Framework_MockObject_MockObject
      */
     protected $requestMock;
 
     /**
-     * @var \OpenTechiz\Blog\Model\Comment|\PHPUnit_Framework_MockObject_MockObject
+     * @var Comment|PHPUnit_Framework_MockObject_MockObject
      */
     protected $commentMock;
 
     /**
-     * @var \Magento\Framework\ObjectManager\ObjectManager|\PHPUnit_Framework_MockObject_MockObject
+     * @var ObjectManager|PHPUnit_Framework_MockObject_MockObject
      */
     protected $objectManagerMock;
 
     /**
-     * @var \Magento\Framework\Registry|\PHPUnit_Framework_MockObject_MockObject
+     * @var Registry|PHPUnit_Framework_MockObject_MockObject
      */
     protected $coreRegistryMock;
 
     /**
-     * @var \Magento\Framework\View\Result\PageFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var PageFactory|PHPUnit_Framework_MockObject_MockObject
      */
     protected $resultPageFactoryMock;
 
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->messageManagerMock = $this->createMock(\Magento\Framework\Message\ManagerInterface::class);
-        $this->coreRegistryMock = $this->createMock(\Magento\Framework\Registry::class);
+        $this->messageManagerMock = $this->createMock(ManagerInterface::class);
+        $this->coreRegistryMock = $this->createMock(Registry::class);
 
-        $this->commentMock = $this->getMockBuilder(\OpenTechiz\Blog\Model\Comment::class)
+        $this->commentMock = $this->getMockBuilder(Comment::class)
             ->disableOriginalConstructor()
             ->setMethods(['getTitle', 'create', 'getId', 'load'])
             ->getMock();
 
-        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManager\ObjectManager::class)
+        $this->objectManagerMock = $this->getMockBuilder(ObjectManager::class)
             ->setMethods(['create', 'get'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with(\OpenTechiz\Blog\Model\Comment::class)
+            ->with(Comment::class)
             ->willReturn($this->commentMock);
 
-        $this->resultRedirectMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $this->resultRedirectMock = $this->getMockBuilder(Redirect::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->resultRedirectFactoryMock = $this->getMockBuilder(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class
+            RedirectFactory::class
         )->disableOriginalConstructor()->getMock();
 
-        $this->resultPageFactoryMock = $this->createMock(\Magento\Framework\View\Result\PageFactory::class);
+        $this->resultPageFactoryMock = $this->createMock(PageFactory::class);
 
         $this->requestMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            RequestInterface::class,
             [],
             '',
             false,
@@ -104,7 +119,7 @@ class EditTest extends TestCase
             []
         );
 
-        $this->contextMock = $this->createMock(\Magento\Backend\App\Action\Context::class);
+        $this->contextMock = $this->createMock(Context::class);
         $this->contextMock->expects($this->once())->method('getRequest')->willReturn($this->requestMock);
         $this->contextMock->expects($this->once())->method('getObjectManager')->willReturn($this->objectManagerMock);
         $this->contextMock->expects($this->once())->method('getMessageManager')->willReturn($this->messageManagerMock);
@@ -113,7 +128,7 @@ class EditTest extends TestCase
             ->willReturn($this->resultRedirectFactoryMock);
 
         $this->editController = $this->objectManager->getObject(
-            \OpenTechiz\Blog\Controller\Adminhtml\Comment\Edit::class,
+            Edit::class,
             [
                 'context' => $this->contextMock,
                 'resultPageFactory' => $this->resultPageFactoryMock,
@@ -181,16 +196,16 @@ class EditTest extends TestCase
             ->method('register')
             ->with('blog_comment', $this->commentMock);
 
-        $resultcommentMock = $this->createMock(\Magento\Backend\Model\View\Result\Page::class);
+        $resultcommentMock = $this->createMock(Page::class);
 
         $this->resultPageFactoryMock->expects($this->once())
             ->method('create')
             ->willReturn($resultcommentMock);
 
-        $titleMock = $this->createMock(\Magento\Framework\View\Page\Title::class);
+        $titleMock = $this->createMock(Title::class);
         $titleMock->expects($this->at(0))->method('prepend')->with(__('Comment Posts'));
         $titleMock->expects($this->at(1))->method('prepend')->with($this->getTitle());
-        $pageConfigMock = $this->createMock(\Magento\Framework\View\Page\Config::class);
+        $pageConfigMock = $this->createMock(Config::class);
         $pageConfigMock->expects($this->exactly(2))->method('getTitle')->willReturn($titleMock);
 
         $resultcommentMock->expects($this->once())
@@ -211,7 +226,7 @@ class EditTest extends TestCase
     }
 
     /**
-     * @return \Magento\Framework\Phrase|string
+     * @return Phrase|string
      */
     protected function getTitle()
     {

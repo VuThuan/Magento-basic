@@ -2,7 +2,17 @@
 
 namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\Post;
 
+use Exception;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Backend\Model\View\Result\RedirectFactory;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\ObjectManager\ObjectManager;
+use OpenTechiz\Blog\Controller\Adminhtml\Post\Delete;
+use OpenTechiz\Blog\Model\Post;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Test for OpenTechiz\Blog\Controller\Adminhtml\Post\Delete Class
@@ -10,31 +20,31 @@ use PHPUnit\Framework\TestCase;
 class DeleteTest extends TestCase
 {
 
-    /** @var \OpenTechiz\Blog\Controller\Adminhtml\Post\Delete */
+    /** @var Delete */
     protected $deleteController;
 
     /** @var \Magento\Framework\TestFramework\Unit\Helper\ObjectManager */
     protected $objectManager;
 
-    /** @var \Magento\Backend\App\Action\Context|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var Context|PHPUnit_Framework_MockObject_MockObject */
     protected $contextMock;
 
-    /** @var \Magento\Backend\Model\View\Result\RedirectFactory|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var RedirectFactory|PHPUnit_Framework_MockObject_MockObject */
     protected $resultRedirectFactoryMock;
 
-    /** @var \Magento\Backend\Model\View\Result\Redirect|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var Redirect|PHPUnit_Framework_MockObject_MockObject */
     protected $resultRedirectMock;
 
-    /** @var \Magento\Framework\Message\ManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ManagerInterface|PHPUnit_Framework_MockObject_MockObject */
     protected $messageManagerMock;
 
-    /** @var \Magento\Framework\App\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var RequestInterface|PHPUnit_Framework_MockObject_MockObject */
     protected $requestMock;
 
-    /** @var \Magento\Framework\ObjectManager\ObjectManager|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ObjectManager|PHPUnit_Framework_MockObject_MockObject */
     protected $objectManagerMock;
 
-    /** @var \OpenTechiz\Blog\Model\Post|\PHPUnit_Framework_MockObject_MockObject $postMock */
+    /** @var Post|PHPUnit_Framework_MockObject_MockObject $postMock */
     protected $postMock;
 
     /** @var string */
@@ -47,10 +57,10 @@ class DeleteTest extends TestCase
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->messageManagerMock = $this->createMock(\Magento\Framework\Message\ManagerInterface::class);
+        $this->messageManagerMock = $this->createMock(ManagerInterface::class);
 
         $this->requestMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            RequestInterface::class,
             [],
             '',
             false,
@@ -59,23 +69,23 @@ class DeleteTest extends TestCase
             ['getParam']
         );
 
-        $this->postMock = $this->getMockBuilder(\OpenTechiz\Blog\Model\Post::class)
+        $this->postMock = $this->getMockBuilder(Post::class)
             ->disableOriginalConstructor()
             ->setMethods(['load', 'delete', 'getTitle'])
             ->getMock();
 
-        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManager\ObjectManager::class)
+        $this->objectManagerMock = $this->getMockBuilder(ObjectManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->resultRedirectMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $this->resultRedirectMock = $this->getMockBuilder(Redirect::class)
             ->setMethods(['setPath'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->resultRedirectFactoryMock = $this->getMockBuilder(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class
+            RedirectFactory::class
         )->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -83,7 +93,7 @@ class DeleteTest extends TestCase
             ->method('create')
             ->willReturn($this->resultRedirectMock);
 
-        $this->contextMock = $this->createMock(\Magento\Backend\App\Action\Context::class);
+        $this->contextMock = $this->createMock(Context::class);
 
         $this->contextMock->expects($this->any())->method('getRequest')->willReturn($this->requestMock);
         $this->contextMock->expects($this->any())->method('getMessageManager')->willReturn($this->messageManagerMock);
@@ -93,7 +103,7 @@ class DeleteTest extends TestCase
             ->willReturn($this->resultRedirectFactoryMock);
 
         $this->deleteController = $this->objectManager->getObject(
-            \OpenTechiz\Blog\Controller\Adminhtml\Post\Delete::class,
+            Delete::class,
             [
                 'context' => $this->contextMock,
             ]
@@ -108,7 +118,7 @@ class DeleteTest extends TestCase
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with(\OpenTechiz\Blog\Model\Post::class)
+            ->with(Post::class)
             ->willReturn($this->postMock);
 
         $this->postMock->expects($this->once())
@@ -164,7 +174,7 @@ class DeleteTest extends TestCase
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with(\OpenTechiz\Blog\Model\Post::class)
+            ->with(Post::class)
             ->willReturn($this->postMock);
 
         $this->postMock->expects($this->once())
@@ -175,7 +185,7 @@ class DeleteTest extends TestCase
             ->willReturn($this->title);
         $this->postMock->expects($this->once())
             ->method('delete')
-            ->willThrowException(new \Exception(__($errorMsg)));
+            ->willThrowException(new Exception(__($errorMsg)));
 
         $this->messageManagerMock->expects($this->once())
             ->method('addErrorMessage')

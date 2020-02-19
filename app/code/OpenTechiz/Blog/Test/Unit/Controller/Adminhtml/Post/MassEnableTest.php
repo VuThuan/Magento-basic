@@ -5,22 +5,27 @@
  */
 namespace OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\Post;
 
-use \OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
+use ArrayIterator;
+use OpenTechiz\Blog\Controller\Adminhtml\Post\MassEnable;
+use OpenTechiz\Blog\Model\ResourceModel\Post\Collection;
+use OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory;
+use OpenTechiz\Blog\Test\Unit\Controller\Adminhtml\AbstractMassActionTest;
+use PHPUnit_Framework_MockObject_MockObject;
 
 class MassEnableTest extends AbstractMassActionTest
 {
     /**
-     * @var \OpenTechiz\Blog\Controller\Adminhtml\Post\MassEnable
+     * @var MassEnable
      */
     protected $massEnableController;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var CollectionFactory|PHPUnit_Framework_MockObject_MockObject
      */
     protected $collectionFactoryMock;
 
     /**
-     * @var \OpenTechiz\Blog\Model\ResourceModel\Post\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @var Collection|PHPUnit_Framework_MockObject_MockObject
      */
     protected $postCollectionMock;
 
@@ -29,14 +34,14 @@ class MassEnableTest extends AbstractMassActionTest
         parent::setUp();
 
         $this->collectionFactoryMock = $this->createPartialMock(
-            \OpenTechiz\Blog\Model\ResourceModel\Post\CollectionFactory::class,
+            CollectionFactory::class,
             ['create']
         );
 
-        $this->postCollectionMock = $this->createMock(\OpenTechiz\Blog\Model\ResourceModel\Post\Collection::class);
+        $this->postCollectionMock = $this->createMock(Collection::class);
 
         $this->massEnableController = $this->objectManager->getObject(
-            \OpenTechiz\Blog\Controller\Adminhtml\Post\MassEnable::class,
+            MassEnable::class,
             [
                 'context' => $this->contextMock,
                 'filter' => $this->filterMock,
@@ -64,7 +69,7 @@ class MassEnableTest extends AbstractMassActionTest
         $this->postCollectionMock->expects($this->once())->method('getSize')->willReturn($enabledPostsCount);
         $this->postCollectionMock->expects($this->once())
             ->method('getIterator')
-            ->willReturn(new \ArrayIterator($collection));
+            ->willReturn(new ArrayIterator($collection));
 
         $this->messageManagerMock->expects($this->once())
             ->method('addSuccessMessage')
@@ -82,12 +87,12 @@ class MassEnableTest extends AbstractMassActionTest
     /**
      * Create Blog Post Collection Mock
      *
-     * @return \OpenTechiz\Blog\Model\ResourceModel\Post\Collection|\PHPUnit_Framework_MockObject_MockObject
+     * @return Collection|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getPostMock()
     {
         $postMock = $this->createPartialMock(
-            \OpenTechiz\Blog\Model\ResourceModel\Post\Collection::class,
+            Collection::class,
             ['setIsActive', 'save']
         );
         $postMock->expects($this->once())->method('setIsActive')->with(true)->willReturn(true);

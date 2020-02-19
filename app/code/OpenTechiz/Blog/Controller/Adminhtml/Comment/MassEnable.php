@@ -5,15 +5,19 @@
  */
 namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
+use Exception;
+use Magento\Backend\App\Action;
+use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 use OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory;
 
 /**
  * Class MassEnable
  */
-class MassEnable extends \Magento\Backend\App\Action
+class MassEnable extends Action
 {
     /**
      * @var Filter
@@ -40,8 +44,8 @@ class MassEnable extends \Magento\Backend\App\Action
     /**
      * Execute action
      *
-     * @return \Magento\Backend\Model\View\Result\Redirect
-     * @throws \Magento\Framework\Exception\LocalizedException|\Exception
+     * @return Redirect
+     * @throws LocalizedException|Exception
      */
     public function execute()
     {
@@ -61,7 +65,7 @@ class MassEnable extends \Magento\Backend\App\Action
             __('A total of %1 record(s) have been enabled.', $collection->getSize())
         );
 
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         return $resultRedirect->setPath('*/*/');
     }
