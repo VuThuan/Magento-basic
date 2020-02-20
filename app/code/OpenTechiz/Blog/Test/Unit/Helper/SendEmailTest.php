@@ -2,9 +2,12 @@
 
 namespace OpenTechiz\Blog\Test\Unit\Helper;
 
-use PHPUnit\Framework\TestCase;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
+use OpenTechiz\Blog\Helper\SendEmail;
+use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 class SendEmailTest extends TestCase
 {
@@ -14,17 +17,17 @@ class SendEmailTest extends TestCase
     private $objectManagerHelper;
 
     /**
-     * @var ScopeConfigInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ScopeConfigInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $configMock;
 
     /**
-     * @var \Magento\Framework\Mail\Template\TransportBuilder|\PHPUnit_Framework_MockObject_MockObject
+     * @var TransportBuilder|PHPUnit_Framework_MockObject_MockObject
      */
     private $transportBuilderMock;
 
     /**
-     * @var \OpenTechiz\Blog\Helper\SendEmail
+     * @var SendEmail
      */
     private $sendEmailHelper;
 
@@ -35,21 +38,22 @@ class SendEmailTest extends TestCase
             ->getMock();
 
         $this->transportBuilderMock = $this->getMockBuilder(
-            \Magento\Framework\Mail\Template\TransportBuilder::class
+            TransportBuilder::class
         )->disableOriginalConstructor(
         )->getMock();
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
 
         $this->sendEmailHelper = $this->objectManagerHelper->getObject(
-            \OpenTechiz\Blog\Helper\SendEmail::class, [
+            SendEmail::class,
+            [
                 'config' => $this->configMock,
                 'transportBuilder' => $this->transportBuilderMock
-        ]);
+        ]
+        );
     }
 
     public function testSendEmail()
     {
-        
     }
 }

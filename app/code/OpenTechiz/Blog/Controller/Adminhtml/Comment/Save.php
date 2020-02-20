@@ -5,30 +5,37 @@
  */
 namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
+use Exception;
 use Magento\Backend\App\Action;
+use Magento\Backend\Model\Session;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\LocalizedException;
+use OpenTechiz\Blog\Model\Comment;
+use OpenTechiz\Blog\Model\CommentFactory;
+use RuntimeException;
 
 /**
  * Save Comment Blog Posts action.
  */
 class Save extends Action
 {
-    /** @var \Magento\Backend\Model\Session  */
+    /** @var Session  */
     protected $_backendSession;
 
-    /** @var \OpenTechiz\Blog\Model\CommentFactory  */
+    /** @var CommentFactory  */
     protected $_commentFactory;
 
     /**
      * @param Action\Context $context
-     * @param \Magento\Backend\Model\Session $backendSession
-     * @param \OpenTechiz\Blog\Model\CommentFactory|null $commentFactory
+     * @param Session $backendSession
+     * @param CommentFactory|null $commentFactory
      */
     public function __construct(
-        \OpenTechiz\Blog\Model\CommentFactory $commentFactory,
-        \Magento\Backend\Model\Session $backendSession,
+        CommentFactory $commentFactory,
+        Session $backendSession,
         Action\Context $context
-    )
-    {
+    ) {
         $this->_commentFactory = $commentFactory;
         $this->_backendSession = $backendSession;
         parent::__construct($context);
@@ -38,15 +45,15 @@ class Save extends Action
      * Save action
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {
         $data = $this->getRequest()->getPostValue();
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            /** @var \OpenTechiz\Blog\Model\Comment $model */
+            /** @var Comment $model */
             $model = $this->_commentFactory->create();
             $id = $this->getRequest()->getParam('comment_id');
             if ($id) {
@@ -65,11 +72,11 @@ class Save extends Action
                     return $resultRedirect->setPath('*/*/edit', ['comment_id' => $model->getCommentID(), '_current' => true ]);
                 }
                 return $resultRedirect->setPath('*/*/');
-            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            } catch (LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $this->messageManager->addError($e->getMessage());
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addException($e, __('Something went wrong while saving the comment.'));
             }
             $this->_getSession()->setFormData($data);

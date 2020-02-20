@@ -7,9 +7,9 @@ namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
 
 use Exception;
 use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Backend\App\Action\Context;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 use OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory;
@@ -50,12 +50,10 @@ class MassEnable extends Action
     public function execute()
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
-
         $this->_eventManager->dispatch(
             'blog_comment_mass_enable_prepare',
             ['comments' => $collection]
         );
-
         foreach ($collection as $item) {
             $item->setIsActive(true);
             $item->save();

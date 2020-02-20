@@ -2,20 +2,22 @@
 
 namespace OpenTechiz\Blog\Controller\View;
 
-use \Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\PageFactory;
 
 class Index extends Action
 {
     protected $_registry;
-    
+
     protected $_pageFactory;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\View\Result\PageFactory $pageFactory
-    )
-    {
+        Context $context,
+        Registry $registry,
+        PageFactory $pageFactory
+    ) {
         $this->_registry = $registry;
         $this->_pageFactory = $pageFactory;
         parent::__construct($context);

@@ -2,16 +2,16 @@
 
 namespace OpenTechiz\Blog\Model;
 
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 use OpenTechiz\Blog\Api\Data\CommentInterface;
-use Magento\Framework\DataObject\IdentityInterface;
 
-class Comment extends AbstractModel implements CommentInterface,IdentityInterface
+class Comment extends AbstractModel implements CommentInterface, IdentityInterface
 {
     const STATUS_ENABLED  = 1;
     const STATUS_DISABLED = 0;
     const STATUS_PENDING  = 2;
-    
+
     const CACHE_POST_COMMENT_TAG = "opentechiz_blog_post_comment";
 
     /**
@@ -51,14 +51,15 @@ class Comment extends AbstractModel implements CommentInterface,IdentityInterfac
     /**
      * @{initialize}
      */
-    function getCommentID(){
+    public function getCommentID()
+    {
         return $this->getData(self::COMMENT_ID);
     }
 
     /**
      * @{initialize}
      */
-    function getComment()
+    public function getComment()
     {
         return $this->getData(self::COMMENT);
     }
@@ -66,7 +67,7 @@ class Comment extends AbstractModel implements CommentInterface,IdentityInterfac
     /**
      * @{initialize}
      */
-    function getPostId()
+    public function getPostId()
     {
         return $this->getData(self::POST_ID);
     }
@@ -74,7 +75,7 @@ class Comment extends AbstractModel implements CommentInterface,IdentityInterfac
     /**
      * @{initialize}
      */
-    function getIsActive()
+    public function getIsActive()
     {
         return $this->getData(self::IS_ACTIVE);
     }
@@ -82,7 +83,7 @@ class Comment extends AbstractModel implements CommentInterface,IdentityInterfac
     /**
      * @{initialize}
      */
-    function getCustomerId()
+    public function getCustomerId()
     {
         return $this->getData(self::CUSTOMER_ID);
     }
@@ -90,64 +91,76 @@ class Comment extends AbstractModel implements CommentInterface,IdentityInterfac
     /**
      * @{initialize}
      */
-    function getCreatedAt()
+    public function getCreatedAt()
     {
         return $this->getData(self::CREATED_AT);
     }
 
-// SET DATA ---------------------------------------------------------------------
+    // SET DATA ---------------------------------------------------------------------
 
     /**
      * @{initialize}
+     * @param $commentId
+     * @return Comment
      */
     public function setCommentId($commentId)
     {
-        $this->setData(self::COMMENT_ID,$commentId);
+        $this->setData(self::COMMENT_ID, $commentId);
         return $this;
     }
 
     /**
      * @{initialize}
+     * @param $comment
+     * @return Comment
      */
     public function setComment($comment)
     {
-        $this->setData(self::COMMENT,$comment);
+        $this->setData(self::COMMENT, $comment);
         return $this;
     }
 
     /**
      * @{initialize}
+     * @param $postId
+     * @return Comment
      */
     public function setPostId($postId)
     {
-        $this->setData(self::POST_ID,$postId);
+        $this->setData(self::POST_ID, $postId);
         return $this;
     }
 
     /**
      * @{initialize}
+     * @param $isActive
+     * @return Comment
      */
     public function setIsActive($isActive)
     {
-        $this->setData(self::IS_ACTIVE,$isActive);
+        $this->setData(self::IS_ACTIVE, $isActive);
         return $this;
     }
 
     /**
      * @{initialize}
+     * @param $customerId
+     * @return Comment
      */
     public function setCustomerId($customerId)
     {
-        $this->setData(self::CUSTOMER_ID,$customerId);
+        $this->setData(self::CUSTOMER_ID, $customerId);
         return $this;
     }
 
     /**
      * @{initialize}
+     * @param $createdTime
+     * @return Comment
      */
     public function setCreatedAt($createdTime)
     {
-        $this->setData(self::CREATED_AT,$createdTime);
+        $this->setData(self::CREATED_AT, $createdTime);
         return $this;
     }
 }

@@ -7,11 +7,14 @@ namespace OpenTechiz\Blog\Test\Unit\Model\Comment\Source;
 
 use OpenTechiz\Blog\Model\Comment;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use OpenTechiz\Blog\Model\Comment\Source\IsActive;
+use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
-class IsActiveTest extends \PHPUnit\Framework\TestCase
+class IsActiveTest extends TestCase
 {
     /**
-     * @var Comment|\PHPUnit_Framework_MockObject_MockObject
+     * @var Comment|PHPUnit_Framework_MockObject_MockObject
      */
     protected $blogCommentMock;
 
@@ -21,7 +24,7 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
     protected $objectManagerHelper;
 
     /**
-     * @var Page\Source\IsActive
+     * @var IsActive
      */
     protected $object;
 
@@ -31,7 +34,7 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManager($this);
-        $this->blogCommentMock = $this->getMockBuilder(\OpenTechiz\Blog\Model\Comment::class)
+        $this->blogCommentMock = $this->getMockBuilder(Comment::class)
             ->disableOriginalConstructor()
             ->setMethods(['getAvailableStatuses'])
             ->getMock();
@@ -46,7 +49,7 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
      */
     protected function getSourceClassName()
     {
-        return \OpenTechiz\Blog\Model\Comment\Source\IsActive::class;
+        return IsActive::class;
     }
 
     /**
@@ -57,7 +60,7 @@ class IsActiveTest extends \PHPUnit\Framework\TestCase
      */
     public function testToOptionArray(array $availableStatuses, array $expected)
     {
-        $this->blogCommentMock->expects($this->once())
+        $this->blogCommentMock->expects($this->any())
             ->method('getAvailableStatuses')
             ->willReturn($availableStatuses);
 

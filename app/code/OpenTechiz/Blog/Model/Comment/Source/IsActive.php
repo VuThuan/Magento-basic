@@ -11,14 +11,14 @@ use OpenTechiz\Blog\Model\Comment;
 class IsActive implements OptionSourceInterface
 {
     /**
-     * @var OpenTechiz\Blog\Model\Comment
+     * @var Comment
      */
     protected $comment;
-    
+
     /**
      * Constructor
      *
-     * @param OpenTechiz\Blog\Model\Comment $comment
+     * @param Comment $comment
      */
     public function __construct(Comment $comment)
     {
@@ -34,7 +34,7 @@ class IsActive implements OptionSourceInterface
     {
         $availableOptions = $this->comment->getAvailableStatuses();
         $option = [];
-        foreach($availableOptions as $key => $value){
+        foreach ($availableOptions as $key => $value) {
             $option[] = [
                 'label' => $value,
                 'value' => $key

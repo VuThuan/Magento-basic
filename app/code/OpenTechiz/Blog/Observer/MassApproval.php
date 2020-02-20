@@ -29,34 +29,19 @@ class MassApproval implements ObserverInterface
     protected $_notiCollectionFactory;
 
     /**
-     * @var CacheContext
-     */
-    private $_cacheContext;
-    /**
-     * @var EventManager
-     */
-    private $_eventManager;
-
-    /**
      * MassApproval constructor.
      * @param CollectionFactory $notiCollectionFactory
      * @param PostFactory $postFactory
      * @param NotificationFactory $notiFactory
-     * @param CacheContext $cacheContext
-     * @param EventManager $eventManager
      */
     public function __construct(
         CollectionFactory $notiCollectionFactory,
         PostFactory $postFactory,
-        NotificationFactory $notiFactory,
-        CacheContext $cacheContext,
-        EventManager $eventManager
+        NotificationFactory $notiFactory
     ) {
         $this->_notiCollectionFactory = $notiCollectionFactory;
         $this->_postFactory = $postFactory;
         $this->_notiFactory = $notiFactory;
-        $this->_cacheContext = $cacheContext;
-        $this->_eventManager = $eventManager;
     }
 
     /**
@@ -106,8 +91,5 @@ class MassApproval implements ObserverInterface
         if (count($postIds)==0) {
             return;
         }
-        // clean cache
-        $this->_cacheContext->registerEntities(\OpenTechiz\Blog\Model\Comment::CACHE_POST_COMMENT_TAG, array_unique($postIds));
-        $this->_eventManager->dispatch('clean_cache_by_tags', ['object' => $this->_cacheContext]);
     }
 }

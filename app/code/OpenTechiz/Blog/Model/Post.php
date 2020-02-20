@@ -2,15 +2,15 @@
 
 namespace OpenTechiz\Blog\Model;
 
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 use OpenTechiz\Blog\Api\Data\PostInterface;
-use Magento\Framework\DataObject\IdentityInterface;
 
-class Post extends AbstractModel implements PostInterface,IdentityInterface
+class Post extends AbstractModel implements PostInterface, IdentityInterface
 {
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 0;
-    
+
     const CACHE_POST_COMMENT_TAG = "opentechiz_blog_post_comment";
 
     /**
@@ -39,7 +39,7 @@ class Post extends AbstractModel implements PostInterface,IdentityInterface
     {
         $this->_init('OpenTechiz\Blog\Model\ResourceModel\Post');
     }
-    
+
     public function checkUrlKey($url_key)
     {
         return $this->_getResource()->checkUrlKey($url_key);
@@ -67,101 +67,136 @@ class Post extends AbstractModel implements PostInterface,IdentityInterface
     /**
      * @{initialize}
      */
-    function getID(){
+    public function getID()
+    {
         return $this->getData(self::POST_ID);
     }
     /**
      * @{initialize}
      */
-    function getUrlKey(){
+    public function getUrlKey()
+    {
         return $this->getData(self::URL_KEY);
     }
     /**
      * @{initialize}
      */
-    function getTitle(){
+    public function getTitle()
+    {
         return $this->getData(self::TITLE);
     }
     /**
      * @{initialize}
      */
-    function getUrl(){
+    public function getUrl()
+    {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $urlBuilder=$objectManager->get("Magento\Framework\UrlInterface");
-        return $urlBuilder->getUrl("blog/".$this->getID());
+        return $urlBuilder->getUrl("blog/" . $this->getID());
     }
     /**
      * @{initialize}
      */
-    function getContent(){
+    public function getContent()
+    {
         return $this->getData(self::CONTENT);
     }
     /**
      * @{initialize}
      */
-    function getCreationTime(){
+    public function getCreationTime()
+    {
         return $this->getData(self::CREATION_TIME);
     }
     /**
      * @{initialize}
      */
-    function getUpdateTime(){
+    public function getUpdateTime()
+    {
         return $this->getData(self::UPDATE_TIME);
     }
     /**
      * @{initialize}
      */
-    function isActive(){
+    public function isActive()
+    {
         return $this->getData(self::IS_ACTIVE);
     }
+
     /**
      * @{initialize}
+     * @param $id
+     * @return Post
      */
-    function setID($id){
-        $this->setData(self::POST_ID,$id);
+    public function setID($id)
+    {
+        $this->setData(self::POST_ID, $id);
         return $this;
     }
+
     /**
      * @{initialize}
+     * @param $urlKey
+     * @return Post
      */
-    function setUrlKey($urlKey){
-        $this->setData(self::URL_KEY,$urlKey);
+    public function setUrlKey($urlKey)
+    {
+        $this->setData(self::URL_KEY, $urlKey);
         return $this;
     }
+
     /**
      * @{initialize}
+     * @param $title
+     * @return Post
      */
-    function setTitle($title){
-        $this->setData(self::TITLE,$title);
+    public function setTitle($title)
+    {
+        $this->setData(self::TITLE, $title);
         return $this;
     }
+
     /**
      * @{initialize}
+     * @param $content
+     * @return Post
      */
-    function setContent($content){
-        $this->setData(self::CONTENT,$content);
+    public function setContent($content)
+    {
+        $this->setData(self::CONTENT, $content);
         return $this;
     }
-    
+
     /**
      * @{initialize}
+     * @param $creatTime
+     * @return Post
      */
-    function setCreationTime($creatTime){
-        $this->setData(self::CREATION_TIME,$creatTime);
+    public function setCreationTime($creatTime)
+    {
+        $this->setData(self::CREATION_TIME, $creatTime);
         return $this;
     }
+
     /**
      * @{initialize}
+     * @param $updateTime
+     * @return Post
      */
-    function setUpdateTime($updateTime){
-        $this->setData(self::UPDATE_TIME,$updateTime);    
+    public function setUpdateTime($updateTime)
+    {
+        $this->setData(self::UPDATE_TIME, $updateTime);
         return $this;
     }
+
     /**
      * @{initialize}
+     * @param $isActive
+     * @return Post
      */
-    function setIsActive($isActive){
-        $this->setData(self::IS_ACTIVE,$isActive);
+    public function setIsActive($isActive)
+    {
+        $this->setData(self::IS_ACTIVE, $isActive);
         return $this;
     }
 }

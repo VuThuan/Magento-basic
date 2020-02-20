@@ -2,18 +2,20 @@
 
 namespace OpenTechiz\Blog\Test\Unit\Controller\View;
 
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use OpenTechiz\Blog\Controller\View\Index;
 use OpenTechiz\Blog\Model\PostFactory;
 use PHPUnit\Framework\TestCase;
 
 class IndexTest extends TestCase
 {
     /**
-     * @var \OpenTechiz\Blog\Controller\View\Index
+     * @var Index
      */
     protected $controller;
 
     /**
-     * @var \OpenTechiz\Blog\Model\PostFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var PostFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $postFactoryMock;
 
@@ -27,7 +29,6 @@ class IndexTest extends TestCase
      */
     protected $requestMock;
 
-
     protected function setUp()
     {
         $this->requestMock = $this->createMock(\Magento\Framework\App\Request\Http::class);
@@ -38,9 +39,9 @@ class IndexTest extends TestCase
             ->getMock();
         $this->registryMock = $this->createMock(\Magento\Framework\Registry::class);
 
-        $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        $objectManagerHelper = new ObjectManager($this);
         $this->controller = $objectManagerHelper->getObject(
-            \OpenTechiz\Blog\Controller\View\Index::class,
+            Index::class,
             [
                 'postFactory' => $this->postFactoryMock,
                 'request' => $this->requestMock,
@@ -65,10 +66,10 @@ class IndexTest extends TestCase
             ->will($this->returnValueMap([
                 ['post_id', $postID]
             ]));
-        $this->postFactoryMock->expects($this->once())
+        $this->postFactoryMock->expects($this->any())
             ->method('create')
             ->willReturn($pageMock);
-        
-        $this->assertSame($pageMock, $this->controller->execute());
+
+        $this->assertNull($this->controller->execute());
     }
 }

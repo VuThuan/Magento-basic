@@ -2,10 +2,9 @@
 
 namespace OpenTechiz\Blog\Test\Unit\Controller\Comment;
 
-use PHPUnit\Framework\TestCase;
 use Magento\Framework\App\RequestInterface;
-use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
+use PHPUnit\Framework\TestCase;
 
 class LoadTest extends TestCase
 {
@@ -13,7 +12,7 @@ class LoadTest extends TestCase
      * @var \OpenTechiz\Blog\Controller\Comment\Load|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $controller;
-    
+
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -47,7 +46,7 @@ class LoadTest extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['create','addFieldToFilter', 'addOrder', 'toArray'])
             ->getMock();
-        
+
         $this->resultJsonFactoryMock = $this->getMockBuilder(JsonFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
@@ -65,12 +64,8 @@ class LoadTest extends TestCase
         );
     }
 
-    /**
-     * @param array $expected
-     * 
-     * @dataProvider dataProviderResultFactory
-     */
-    public function testDataHasLoadWhenExecute(array $expected)
+
+    public function testDataHasLoadWhenExecute()
     {
         $userId = 1;
         $postData = [
@@ -81,26 +76,26 @@ class LoadTest extends TestCase
         $dataRequest = $this->requestMock->expects($this->once())
             ->method('getPostValue')
             ->willReturn($postData);
-        
+
         $customerId = $this->customerSessionMock->expects($this->once())
             ->method('getCustomerId')
             ->willReturn($userId);
-        
+
         $commentCollection = $this->createMock(\OpenTechiz\Blog\Model\ResourceModel\Comment\Collection::class);
         $this->commentCollectionFactoryMock->expects($this->once())
             ->method('create')
             ->willReturn($commentCollection);
-        
+
         $commentCollection->expects($this->at(0))
             ->method('addFieldToFilter')
-            ->with('post_id', $dataRequest['post_id'])
+            ->with('post_id', 1)
             ->willReturnSelf();
 
         $commentCollection->expects($this->at(1))
             ->method('addFieldToFilter')
             ->with('is_active', 1)
             ->willReturnSelf();
-        
+
         $commentCollection->expects($this->at(2))
             ->method('addFieldToFilter')
             ->with('customer_id', $customerId)
@@ -117,7 +112,7 @@ class LoadTest extends TestCase
                 'post_id' => 1,
                 'content' => 'this is content test'
             ]);
-        
+
         $resultJson = $this->createMock(\Magento\Framework\Controller\Result\Json::class);
 
         $this->resultJsonFactoryMock->expects($this->once())
@@ -126,16 +121,19 @@ class LoadTest extends TestCase
         $resultJson->expects($this->once())
                 ->method('setData')
                 ->with($commentCollection);
-        
-        $this->assertSame($resultJson, $expected);
+
+        $arrayT = [
+            'totalRecords' => 2,
+            'post_id' => 1,
+            'content' => 'this is content test'
+        ];
+        $this->assertSame($resultJson, $arrayT);
     }
 
     public function dataProviderResultFactory()
     {
         return [
-            'totalRecords' => 2,
-            'post_id' => 1,
-            'content' => 'this is content test'
+            'totalRecords' => 2, 'post_id' => 1, 'content' => 'this is content test'
         ];
     }
 }
