@@ -148,14 +148,15 @@ class Save extends Action
             );
 
             $model->save();
+
+            $userInfo = $this->_customerSession->getCustomerData();
+            $name = $userInfo->getFirstName() . " " . $userInfo->getLastName();
+            $email = $userInfo->getEmail();
             //  echo 'success';
             $jsonResultResponse->setData([
                 'result' => 'success',
                 'message' => 'Thank you for your submission. Our Admins will review and approve shortly'
             ]);
-            $userInfo = $this->_customerSession->getCustomerData();
-            $name = $userInfo->getFirstName() . " " . $userInfo->getLastName();
-            $email = $userInfo->getEmail();
             // send email to user
             $this->_sendEmail->approvalEmail($email, $name);
         } else {
